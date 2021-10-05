@@ -1,1 +1,0 @@
-add_library(dr_wav STATIC dr_wav.h dr_wav_impl.c)
