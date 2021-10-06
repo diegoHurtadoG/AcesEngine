@@ -20,5 +20,6 @@ add_subdirectory_with_folder("third_party/OpenMesh" OpenMesh-8.1)
 add_subdirectory_with_folder("third_party" dr_wav)
 add_subdirectory_with_folder("third_party/Assimp" assimp-5.0.1)
 add_subdirectory_with_folder("third_party" stb)
+add_subdirectory_with_folder("third_party" SDL2)
 
 
