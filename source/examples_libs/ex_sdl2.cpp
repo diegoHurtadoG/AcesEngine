@@ -1,5 +1,4 @@
 #include "SDL.h"
-#include "SDL.a"
 
 int main(int argc, char* argv[])
 {
