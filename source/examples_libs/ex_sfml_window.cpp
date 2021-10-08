@@ -2,6 +2,7 @@
 
 int main()
 {
+    
     sf::Window window(sf::VideoMode(800, 600), "My window");
 
     // run the program as long as the window is open
@@ -16,6 +17,6 @@ int main()
                 window.close();
         }
     }
-
+    
     return 0;
 }
