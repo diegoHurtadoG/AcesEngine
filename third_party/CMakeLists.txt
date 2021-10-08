@@ -15,11 +15,11 @@ endfunction()
 add_subdirectory_with_folder("third_party" glad)
 add_subdirectory_with_folder("third_party" glfw-3.3.2)
 add_subdirectory_with_folder("third_party" imgui-1.78)
-add_subdirectory_with_folder("third_party/OpenAL" openal-soft)
+#add_subdirectory_with_folder("third_party/OpenAL" openal-soft)
 add_subdirectory_with_folder("third_party/OpenMesh" OpenMesh-8.1)
 add_subdirectory_with_folder("third_party" dr_wav)
 add_subdirectory_with_folder("third_party/Assimp" assimp-5.0.1)
 add_subdirectory_with_folder("third_party" stb)
-# add_subdirectory_with_folder("third_party/SDL2" SDL2)
+add_subdirectory_with_folder("third_party/SFML" SFML)
 
 

@@ -7,4 +7,4 @@ function(MakeExample TARGETNAME FILENAME)
 
 endfunction(MakeExample)
 
-MakeExample(ex_sdl2 ex_sdl2.cpp)
+MakeExample(ex_sfml_window ex_sfml_window.cpp)
