@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.15)
 project(grafica C CXX)
 find_package(OpenGL REQUIRED)
 add_definitions(-D_USE_MATH_DEFINES)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/third_party/")
 set(THIRD_PARTY_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/glad/include"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw-3.3.2/include"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glm-0.9.9.8"
@@ -17,9 +18,9 @@ set(THIRD_PARTY_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/gla
 set(GRAFICA_INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/source/")
 
 if(MSVC)
-	set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} OpenAL dr_wav assimp stb OpenMeshCore SDL2)
+	set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} OpenAL dr_wav assimp stb OpenMeshCore)
 else()
-	set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} stdc++fs OpenAL dr_wav assimp stb OpenMeshCore SDL2)
+	set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} stdc++fs OpenAL dr_wav assimp stb OpenMeshCore)
 endif(MSVC)
 
 configure_file(CMakeConfigFiles/root_directory.h.in "${CMAKE_SOURCE_DIR}/source/grafica/root_directory.h")
