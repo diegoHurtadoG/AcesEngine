@@ -8,3 +8,5 @@ function(MakeExample TARGETNAME FILENAME)
 endfunction(MakeExample)
 
 MakeExample(ex_sfml_window ex_sfml_window.cpp)
+MakeExample(ex_sfml_graphics ex_sfml_graphics.cpp)
+MakeExample(ex_sfml_audio ex_sfml_audio.cpp)

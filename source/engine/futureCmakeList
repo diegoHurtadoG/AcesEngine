@@ -1,8 +1,8 @@
 set(ENGINE_HEADERS 
-		
+		#shape_maker.h
 		)
 set(ENGINE_SOURCES 
-		
+		#shape_maker.cpp
 		)
 
 add_library(engine STATIC ${ENGINE_SOURCES} ${ENGINE_HEADERS} engine.h ${Shaders})
