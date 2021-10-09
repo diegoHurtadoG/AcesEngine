@@ -28,7 +28,7 @@ int main() {
 
         }
 
-        //window.draw(card);
+        window.draw(card);
         window.display();
 
     }
