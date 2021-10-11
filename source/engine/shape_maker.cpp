@@ -87,6 +87,66 @@ class Card {
         }
 };
 
+class AcesWindow {
+    sf::RenderWindow window;
+    sf::Texture backgroundTexture;
+    int heigth, width;
+    std::string title, backgroundPath;
+    sf::RectangleShape backgroundRectangle;
+
+    public:
+        AcesWindow(int heigth, int width, std::string title = "Default Title",
+            std::string backgroundPath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/backgrounds/0.jpg") {
+            this->width = width;
+            this->heigth = heigth;
+            this->title = title;
+            this->backgroundPath = backgroundPath;
+            this->window.create(sf::VideoMode(heigth, width), title, sf::Style::Close | sf::Style::Resize); // Estudiar esto, hay un posible 4to parametro
+            try {
+                if (!this->backgroundTexture.loadFromFile(this->backgroundPath))
+                {
+                    throw("Error loading texture");
+                }
+                backgroundRectangle.setSize(sf::Vector2f((float) heigth,(float) width));
+                backgroundRectangle.setTexture(&(this->backgroundTexture));
+            }
+            catch (std::string msg) {
+                printf("%s\n", msg);
+            }
+        }
+
+    public:
+        sf::RenderWindow& getWindow() {
+            return this->window;
+        }
+        void setSize(int heigth, int width) {
+            this->window.setSize(sf::Vector2u(heigth, width));
+        }
+        sf::Vector2u getSize() {
+            return this->window.getSize();
+        }
+        void setTexture(std::string newPath) {
+            try {
+                if (!this->backgroundTexture.loadFromFile(newPath))
+                {
+                    throw("Error loading texture");
+                }
+                // Test this to see if texture really changes (not urgent)
+            }
+            catch (std::string msg) {
+                printf("%s\n", msg);
+            }
+        }
+        void update() {
+            this->window.clear();
+            this->window.draw(backgroundRectangle);
+        }
+        void display() {
+            this->window.display();
+        }
+
+};
+
 void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) {
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -100,29 +160,21 @@ void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) 
 }
 
 
+
 // This function is to test the art i will be doing in the functions
 
 int main() {
     std::vector<Card*> card_array;
 
-    // Initialize a Render Window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "My window", sf::Style::Close | sf::Style::Resize);
-
-    // Make a rectangle to put on background
-    sf::Texture background_texture;
-    if (!background_texture.loadFromFile("C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/backgrounds/0.jpg"))
-    {
-        printf("Error loading background texture");
-        return -1;
-    }
-    sf::RectangleShape rectangle_test(sf::Vector2f(800.0f, 600.0f));
-    rectangle_test.setTexture(&background_texture);
+    AcesWindow AcesWindow(800, 600, "Ventana");
+    sf::RenderWindow& window = AcesWindow.getWindow();
 
     // Testing card class
     Card card_test;
     card_array.push_back(&card_test);
 
     // run the program as long as the window is open
+    // TODO: abstract while loop to use AcesWindow instead of window
     while (window.isOpen())
     {
 
@@ -147,10 +199,9 @@ int main() {
 
 
         dragAndDropCards(card_array, window);
-        window.clear();
-        window.draw(rectangle_test);
+        AcesWindow.update();
         card_test.draw(window);
-        window.display();
+        AcesWindow.display();
 
     }
     return 0;
