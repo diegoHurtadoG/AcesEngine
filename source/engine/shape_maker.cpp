@@ -87,6 +87,18 @@ class Card {
         }
 };
 
+void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) {
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+        for (auto i = card_vector.begin(); i != card_vector.end(); i++) {
+            if ((**i).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
+                (**i).setPosition(sf::Vector2f((float)mouse_pos.x, (float)mouse_pos.y));
+            }
+        }
+    }
+}
+
 
 // This function is to test the art i will be doing in the functions
 
@@ -133,16 +145,8 @@ int main() {
 
         }
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-        {
-            auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
-            for (auto i = card_array.begin(); i != card_array.end(); i++) {
-                if ((**i).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
-                    (**i).setPosition(sf::Vector2f((float)mouse_pos.x, (float)mouse_pos.y));
-                }
-            }
-        }
 
+        dragAndDropCards(card_array, window);
         window.clear();
         window.draw(rectangle_test);
         card_test.draw(window);
