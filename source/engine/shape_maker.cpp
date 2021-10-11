@@ -16,7 +16,7 @@
 
 // TODO: Classes for cards and dice
 //      Cards: - Position (Drag and Drop?)
-//             - Asset
+//             - Assets
 //             - OnClick -> show reverse
 //      Dice:  - Position (dinamic?)
 //             - Asset
@@ -24,18 +24,28 @@
 
 class Card {
     sf::Vector2f position;
-    sf::Texture texture;
+    sf::Texture FrontTexture;
+    sf::Texture BackTexture;
     sf::Sprite sprite;
 
     // Constructor
     public:
-        Card(float x = 0.0f, float y = 0.0f, std::string texturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png", int firstPointAssetX = 1, int firstPointAssetY = 1, int secondPointAssetX = 32, int secondPointAssetY = 44) {
+        Card(float x = 0.0f, float y = 0.0f, 
+            std::string BackTexturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png", 
+            std::string FrontTexturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png",
+            int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
+            int firstPointAssetXFRONT = 33, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
+        {
             this->position = sf::Vector2f(x, y);
-            if (!this->texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
+            if (!this->BackTexture.loadFromFile(BackTexturePath, sf::IntRect(firstPointAssetXBACK, firstPointAssetYBACK, secondPointAssetXBACK, secondPointAssetYBACK)))
             {
-                printf("Error loading texture");
+                printf("Error loading Back texture");
             }
-            this->sprite.setTexture(this->texture);
+            if (!this->FrontTexture.loadFromFile(FrontTexturePath, sf::IntRect(firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT)))
+            {
+                printf("Error loading Front texture");
+            }
+            this->sprite.setTexture(this->FrontTexture);
             this->sprite.setPosition(this->position);
         }
 
@@ -46,11 +56,17 @@ class Card {
         sf::Vector2f getPosition() {
             return this->position;
         }
-        void setTexture(sf::Texture texture) {
-            this->texture = texture;
+        void setBackTexture(sf::Texture texture) {
+            this->BackTexture = texture;
         }
-        sf::Texture getTexture() {
-            return this->texture;
+        sf::Texture getBackTexture() {
+            return this->BackTexture;
+        }
+        void setFrontTexture(sf::Texture texture) {
+            this->FrontTexture = texture;
+        }
+        sf::Texture getFrontTexture() {
+            return this->FrontTexture;
         }
         void setSprite(sf::Sprite sprite) {
             this->sprite = sprite;
@@ -61,6 +77,9 @@ class Card {
 
         void draw(sf::RenderWindow &renderWindow) {
             renderWindow.draw(this->sprite);
+        }
+        void turn() {
+            this->sprite.getTexture() == &this->FrontTexture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->FrontTexture);
         }
 };
 
@@ -129,6 +148,7 @@ int main() {
         window.draw(rectangle_test);
         //window.draw(sprite_test);
         card_test.draw(window);
+        card_test.turn();
 
         window.display();
 
