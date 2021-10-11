@@ -171,7 +171,7 @@ int main() {
 
     // Testing card class
     Card card_test;
-    card_array.push_back(&card_test);
+    card_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
