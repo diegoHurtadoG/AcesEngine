@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <string>
 
 /*
     This file will be defining common art used in board games
@@ -7,6 +8,61 @@
         functions with some random optiona values
 */
 
+// TODO: Pegarse a la pauta y ver puntajes
+//      - Hacer modulo audio por ejemplo
+//      - Idea: Cada objeto que se hace en pantalla meterlo a un [], para que sea mas facil manejar las posiciones y clicks
+//      - Idea: Que las fichas que vienen en la carpeta de fotos sean los jugadores (movimientos con inputs)
+//      - Idea: Para luces, si quiero hacer, podria hacer un tipo de memorize oscuro y que el mouse sea una fuente de luz
+
+// TODO: Classes for cards and dice
+//      Cards: - Position (Drag and Drop?)
+//             - Asset
+//             - OnClick -> show reverse
+//      Dice:  - Position (dinamic?)
+//             - Asset
+//             - OnClick -> Roll
+
+class Card {
+    sf::Vector2f position;
+    sf::Texture texture;
+    sf::Sprite sprite;
+
+    // Constructor
+    public:
+        Card(float x = 0.0f, float y = 0.0f, std::string texturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png", int firstPointAssetX = 1, int firstPointAssetY = 1, int secondPointAssetX = 32, int secondPointAssetY = 44) {
+            this->position = sf::Vector2f(x, y);
+            if (!this->texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
+            {
+                printf("Error loading texture");
+            }
+            this->sprite.setTexture(this->texture);
+            this->sprite.setPosition(this->position);
+        }
+
+    public:
+        void setPosition(sf::Vector2f pos) {
+            this->position = pos;
+        }
+        sf::Vector2f getPosition() {
+            return this->position;
+        }
+        void setTexture(sf::Texture texture) {
+            this->texture = texture;
+        }
+        sf::Texture getTexture() {
+            return this->texture;
+        }
+        void setSprite(sf::Sprite sprite) {
+            this->sprite = sprite;
+        }
+        sf::Sprite getSprite() {
+            return this->sprite;
+        }
+
+        void draw(sf::RenderWindow &renderWindow) {
+            renderWindow.draw(this->sprite);
+        }
+};
 
 
 // This function is to test the art i will be doing in the functions
@@ -18,7 +74,7 @@ int main() {
 
     // Make a rectangle to put on background
     sf::Texture background_texture;
-    if (!background_texture.loadFromFile("C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/backgrounds/background_circles.jpg"))
+    if (!background_texture.loadFromFile("C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/backgrounds/0.jpg"))
     {
         printf("Error loading background texture");
         return -1;
@@ -43,6 +99,8 @@ int main() {
     sprite_test.setTexture(texture_test);
     sprite_test.setPosition(sf::Vector2f(33.0f, 0.0f));
 
+    // Testing card class
+    Card card_test;
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -67,8 +125,11 @@ int main() {
 
         }
 
+        window.clear();
         window.draw(rectangle_test);
-        window.draw(sprite_test);
+        //window.draw(sprite_test);
+        card_test.draw(window);
+
         window.display();
 
     }
