@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 #include <vector>
+#include <iostream>
 
 /*
     This file will be defining common art used in board games
@@ -24,7 +25,6 @@
 //             - OnClick -> Roll
 
 class Card {
-    sf::Vector2f position;
     sf::Texture FrontTexture;
     sf::Texture BackTexture;
     sf::Sprite sprite;
@@ -37,7 +37,6 @@ class Card {
             int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
             int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
         {
-            this->position = sf::Vector2f(x, y);
             if (!this->BackTexture.loadFromFile(BackTexturePath, sf::IntRect(firstPointAssetXBACK, firstPointAssetYBACK, secondPointAssetXBACK, secondPointAssetYBACK)))
             {
                 printf("Error loading Back texture");
@@ -47,17 +46,16 @@ class Card {
                 printf("Error loading Front texture");
             }
             this->sprite.setTexture(this->FrontTexture);
-            this->sprite.setPosition(this->position);
+            this->sprite.setPosition(sf::Vector2f(x, y));
             this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
         }
 
     public:
         void setPosition(sf::Vector2f pos) {
-            this->position = pos;
-            this->sprite.setPosition(this->position);
+            this->sprite.setPosition(pos);
         }
         sf::Vector2f getPosition() {
-            return this->position;
+            return this->sprite.getPosition();
         }
         void setBackTexture(sf::Texture texture) {
             this->BackTexture = texture;
@@ -111,7 +109,7 @@ class AcesWindow {
                 backgroundRectangle.setTexture(&(this->backgroundTexture));
             }
             catch (std::string msg) {
-                printf("%s\n", msg);
+                std::cout << msg << "\n";;
             }
         }
 
@@ -159,6 +157,76 @@ void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) 
     }
 }
 
+class Player {
+    sf::Texture texture;
+    sf::Sprite sprite;
+
+    public:
+        Player(float x = 0.0f, float y = 0.0f,
+            std::string texturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/dice and pieces/red piece.png",
+            int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0) 
+        {
+            if ((firstPointAssetX != secondPointAssetX) && (firstPointAssetY != secondPointAssetY)) {
+                if (!this->texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
+                {
+                    printf("Error loading Back texture");
+                }
+            }
+            else {
+                if (!this->texture.loadFromFile(texturePath))
+                {
+                    printf("Error loading Back texture");
+                }
+            }
+            this->sprite.setTexture(this->texture);
+            this->sprite.setPosition(sf::Vector2f(x, y));
+            this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
+        }
+
+    public:
+        void setPosition(sf::Vector2f pos) {
+            this->sprite.setPosition(pos);
+        }
+        sf::Vector2f getPosition() {
+            return this->sprite.getPosition();
+        }
+        void setTexture(sf::Texture texture) {
+            this->texture = texture;
+        }
+        sf::Texture getTexture() {
+            return this->texture;
+        }
+        void setSprite(sf::Sprite sprite) {
+            this->sprite = sprite;
+        }
+        sf::Sprite getSprite() {
+            return this->sprite;
+        }
+
+        void receiveInput() {
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+                this->sprite.move(-0.2f, 0.0f);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+                this->sprite.move(0.2f, 0.0f);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+                this->sprite.move(0.0f, -0.2f);
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+                this->sprite.move(0.0f, 0.2f);
+            }
+        }
+
+        void draw(sf::RenderWindow& renderWindow, bool move = true) {
+            renderWindow.draw(this->sprite);
+            if (move){
+                this->receiveInput();
+            }
+        }
+
+};
+
 
 
 // This function is to test the art i will be doing in the functions
@@ -172,6 +240,10 @@ int main() {
     // Testing card class
     Card card_test;
     card_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
+
+    // Testing player class
+    Player player1;
+
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
@@ -197,10 +269,10 @@ int main() {
 
         }
 
-
         dragAndDropCards(card_array, window);
         AcesWindow.update();
-        card_test.draw(window);
+        card_test.draw(window); // Podria poner un for en card_array y dibujar todas
+        player1.draw(window);
         AcesWindow.display();
 
     }
