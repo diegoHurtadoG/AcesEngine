@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <grafica/root_directory.h>
 
 /*
     This file will be defining common art used in board games
@@ -32,8 +33,8 @@ class Card {
     // Constructor
     public:
         Card(float x = 16.0f, float y = 22.0f, 
-            std::string BackTexturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png", 
-            std::string FrontTexturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png",
+            std::string BackTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
+            std::string FrontTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
             int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
             int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
         {
@@ -94,7 +95,7 @@ class AcesWindow {
 
     public:
         AcesWindow(int heigth, int width, std::string title = "Default Title",
-            std::string backgroundPath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/backgrounds/0.jpg") {
+            std::string backgroundPath = Grafica::getPath("assets/imgs/backgrounds/0.jpg").string()) {
             this->width = width;
             this->heigth = heigth;
             this->title = title;
@@ -160,11 +161,18 @@ void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) 
 class Player {
     sf::Texture texture;
     sf::Sprite sprite;
+    int playerNumber;
+    sf::Keyboard::Key left;
+    sf::Keyboard::Key right;
+    sf::Keyboard::Key up;
+    sf::Keyboard::Key down;
+
 
     public:
         Player(float x = 0.0f, float y = 0.0f,
-            std::string texturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/dice and pieces/red piece.png",
-            int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0) 
+            std::string texturePath = Grafica::getPath("assets/imgs/dice and pieces/red piece.png").string(),
+            int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0,
+            int playerNumber = 1)
         {
             if ((firstPointAssetX != secondPointAssetX) && (firstPointAssetY != secondPointAssetY)) {
                 if (!this->texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
@@ -181,6 +189,9 @@ class Player {
             this->sprite.setTexture(this->texture);
             this->sprite.setPosition(sf::Vector2f(x, y));
             this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
+            this->playerNumber = playerNumber;
+            this->remapInput(this->playerNumber);
+           
         }
 
     public:
@@ -202,18 +213,40 @@ class Player {
         sf::Sprite getSprite() {
             return this->sprite;
         }
+        void setPlayerNumber(int playerNumber) {
+            this->playerNumber = playerNumber;
+            this->remapInput(playerNumber);
+        }
+        int getPlayerNumber() {
+            return this->playerNumber;
+        }
+
+        void remapInput(int playerNumber) {
+            if (playerNumber == 1) {
+                this->left = sf::Keyboard::Key::A;
+                this->right = sf::Keyboard::Key::D;
+                this->up = sf::Keyboard::Key::W;
+                this->down = sf::Keyboard::Key::S;
+            }
+            else if (playerNumber != 1) {
+                this->left = sf::Keyboard::Key::Left;
+                this->right = sf::Keyboard::Key::Right;
+                this->up = sf::Keyboard::Key::Up;
+                this->down = sf::Keyboard::Key::Down;
+            }
+        }
 
         void receiveInput() {
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+            if (sf::Keyboard::isKeyPressed(this->left)) {
                 this->sprite.move(-0.2f, 0.0f);
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+            if (sf::Keyboard::isKeyPressed(this->right)) {
                 this->sprite.move(0.2f, 0.0f);
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W)) {
+            if (sf::Keyboard::isKeyPressed(this->up)) {
                 this->sprite.move(0.0f, -0.2f);
             }
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S)) {
+            if (sf::Keyboard::isKeyPressed(this->down)) {
                 this->sprite.move(0.0f, 0.2f);
             }
         }
@@ -243,7 +276,7 @@ int main() {
 
     // Testing player class
     Player player1;
-
+    Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/green piece.png").string(), 0, 0, 0, 0, 2);
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
@@ -273,6 +306,7 @@ int main() {
         AcesWindow.update();
         card_test.draw(window); // Podria poner un for en card_array y dibujar todas
         player1.draw(window);
+        player2.draw(window);
         AcesWindow.display();
 
     }
