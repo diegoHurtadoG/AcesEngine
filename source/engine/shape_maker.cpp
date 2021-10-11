@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <vector>
 
 /*
     This file will be defining common art used in board games
@@ -30,11 +31,11 @@ class Card {
 
     // Constructor
     public:
-        Card(float x = 0.0f, float y = 0.0f, 
+        Card(float x = 16.0f, float y = 22.0f, 
             std::string BackTexturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png", 
             std::string FrontTexturePath = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png",
             int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
-            int firstPointAssetXFRONT = 33, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
+            int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
         {
             this->position = sf::Vector2f(x, y);
             if (!this->BackTexture.loadFromFile(BackTexturePath, sf::IntRect(firstPointAssetXBACK, firstPointAssetYBACK, secondPointAssetXBACK, secondPointAssetYBACK)))
@@ -47,11 +48,13 @@ class Card {
             }
             this->sprite.setTexture(this->FrontTexture);
             this->sprite.setPosition(this->position);
+            this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
         }
 
     public:
         void setPosition(sf::Vector2f pos) {
             this->position = pos;
+            this->sprite.setPosition(this->position);
         }
         sf::Vector2f getPosition() {
             return this->position;
@@ -78,6 +81,7 @@ class Card {
         void draw(sf::RenderWindow &renderWindow) {
             renderWindow.draw(this->sprite);
         }
+
         void turn() {
             this->sprite.getTexture() == &this->FrontTexture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->FrontTexture);
         }
@@ -87,6 +91,7 @@ class Card {
 // This function is to test the art i will be doing in the functions
 
 int main() {
+    std::vector<Card*> card_array;
 
     // Initialize a Render Window
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window", sf::Style::Close | sf::Style::Resize);
@@ -101,25 +106,9 @@ int main() {
     sf::RectangleShape rectangle_test(sf::Vector2f(800.0f, 600.0f));
     rectangle_test.setTexture(&background_texture);
 
-
-    // Initialize a texture of a card
-    sf::Texture texture_test;
-    // Ath (1, 1) of the .png, loads a 32x44 image
-    if (!texture_test.loadFromFile("C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/imgs/8BitDeckAssets.png", sf::IntRect(1, 1, 32, 44)))
-    {
-        printf("Error loading texture");
-        return -1;
-    }
-    texture_test.setSmooth(true);
-
-
-    // Initialize a Sprite to stick the texture in
-    sf::Sprite sprite_test;
-    sprite_test.setTexture(texture_test);
-    sprite_test.setPosition(sf::Vector2f(33.0f, 0.0f));
-
     // Testing card class
     Card card_test;
+    card_array.push_back(&card_test);
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -144,12 +133,19 @@ int main() {
 
         }
 
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+            for (auto i = card_array.begin(); i != card_array.end(); i++) {
+                if ((**i).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
+                    (**i).setPosition(sf::Vector2f((float)mouse_pos.x, (float)mouse_pos.y));
+                }
+            }
+        }
+
         window.clear();
         window.draw(rectangle_test);
-        //window.draw(sprite_test);
         card_test.draw(window);
-        card_test.turn();
-
         window.display();
 
     }
