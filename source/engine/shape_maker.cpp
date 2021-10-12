@@ -477,7 +477,7 @@ class TextWriter {
             this->text.setPosition(sf::Vector2f(x, y));
         }
 
-        void draw(sf::RenderWindow& renderWindow, bool move = true) {
+        void draw(sf::RenderWindow& renderWindow) {
             renderWindow.draw(this->text);
         }
 };
