@@ -29,7 +29,7 @@ build/source/engine/Release/
 Done that, you can build the solution in the Build directory. The build **MUST** be made in **RELEASE** mode.
 The example can be found in
 ```
-build/source/engine/shape_maker.exe
+build/source/engine/Release/shape_maker.exe
 ```
 ---
 ### Ignore the file content and go down until you find the last while lopp
