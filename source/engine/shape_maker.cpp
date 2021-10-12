@@ -9,16 +9,12 @@
 /*
     This file will be defining common art used in board games
         such as cards and a dice for example
-    Ill try to make classes (to make them rollable or diceable), but if I fail they will be
-        functions with some random optiona values
 */
 
 // TODO: Pegarse a la pauta y ver puntajes
-//      - Hacer modulo audio por ejemplo
-//      - Idea: Cada objeto que se hace en pantalla meterlo a un [], para que sea mas facil manejar las posiciones y clicks
-//      - Idea: Que las fichas que vienen en la carpeta de fotos sean los jugadores (movimientos con inputs)
 //      - Idea: Para luces, si quiero hacer, podria hacer un tipo de memorize oscuro y que el mouse sea una fuente de luz
-//      - Para manejar los vectores, podria hacer la clase Cards y Players que sea un vector de cada una, y que tengan lo metodos add y cosas asi
+//      - Para el remapeo de controles solo se puede la opcion del switch/case gigante
+
 
 // TODO: Classes for cards and dice
 //      Cards: - Position (Drag and Drop?)
@@ -136,7 +132,7 @@ class AcesWindow {
                 // Test this to see if texture really changes (not urgent)
             }
             catch (std::string msg) {
-                printf("%s\n", msg);
+                std::cout << msg;
             }
         }
         void update() {
@@ -292,11 +288,16 @@ class Player {
 class SoundPlayer {
     std::map<std::string, sf::Sound> sounds;
     std::map<std::string, sf::SoundBuffer> buffers;
+    std::map<std::string, sf::Music> musics;
+    sf::SoundBufferRecorder recorder;
+    bool recording = false;
 
     public:
         SoundPlayer() {};
 
     public:
+        // Audio Methods
+
         void loadAudio(std::string uniqueName, std::string audioPath) {
             sf::Sound sound;
             sf::SoundBuffer buff;
@@ -311,6 +312,120 @@ class SoundPlayer {
             this->sounds.at(uniqueName).setBuffer(this->buffers.at(uniqueName));
             this->sounds.at(uniqueName).play();
         }
+
+        void stopAudio(std::string uniqueName) {
+            this->sounds.at(uniqueName).stop();
+        }
+
+        void setVolumeAudio(std::string uniqueName, int vol) {
+            this->sounds.at(uniqueName).setVolume((float) vol);
+        }
+
+        float getVolumeAudio(std::string uniqueName) {
+            this->sounds.at(uniqueName).getVolume();
+        }
+
+        void setPitchAudio(std::string uniqueName, float value) {
+            this->sounds.at(uniqueName).setPitch(value);
+        }
+
+        float getPitchAudio(std::string uniqueName) {
+            this->sounds.at(uniqueName).getPitch();
+        }
+
+        // Offset in seconds
+        float setPlayingOffsetAudio(std::string uniqueName, float offset) {
+            this->sounds.at(uniqueName).setPlayingOffset(sf::seconds(offset));
+        }
+
+        void loopAudio(std::string uniqueName) {
+            this->sounds.at(uniqueName).setLoop(!this->sounds.at(uniqueName).getLoop());
+        }
+
+        // Music methods
+
+        // This one throwing error with assimp (?)
+        /*
+        void loadMusic(std::string uniqueName, std::string musicPath) {
+            sf::Music music;
+            if (!music.openFromFile(musicPath)) {
+                printf("Error loading music");
+            }
+            this->musics.emplace(uniqueName, music);
+        }
+        */
+
+        void playMusic(std::string uniqueName) {
+            this->musics.at(uniqueName).play();
+        }
+
+        void stopMusic(std::string uniqueName) {
+            this->musics.at(uniqueName).stop();
+        }
+
+        void setVolumeMusic(std::string uniqueName, int vol) {
+            this->musics.at(uniqueName).setVolume((float)vol);
+        }
+
+        float getVolumeMusic(std::string uniqueName) {
+            this->musics.at(uniqueName).getVolume();
+        }
+
+        void setPitchMusic(std::string uniqueName, float value) {
+            this->musics.at(uniqueName).setPitch(value);
+        }
+
+        float getPitchMusic(std::string uniqueName) {
+            this->musics.at(uniqueName).getPitch();
+        }
+
+        // Offset in seconds
+        float setPlayingOffsetMusic(std::string uniqueName, float offset) {
+            this->musics.at(uniqueName).setPlayingOffset(sf::seconds(offset));
+        }
+
+        void loopMusic(std::string uniqueName) {
+            this->musics.at(uniqueName).setLoop(!this->musics.at(uniqueName).getLoop());
+        }
+        
+        void startRecordingSound() {
+            if (!sf::SoundBufferRecorder::isAvailable())
+            {
+                printf("Audio capture not available in system");
+            }
+            this->recorder.start();
+            this->recording = true;
+        }
+
+        void pauseRecordingSound() {
+            this->recorder.stop();
+            this->recording = false;
+        }
+
+        void resumeRecordingSound() {
+            if (!sf::SoundBufferRecorder::isAvailable())
+            {
+                printf("Audio capture not available in system");
+            }
+            this->recorder.start();
+            this->recording = true;
+        }
+
+        void stopRecordingSound(std::string uniqueName) {
+            this->recorder.stop();
+            this->recording = false;
+            const sf::SoundBuffer& buffer = recorder.getBuffer();
+            this->sounds.emplace(uniqueName, buffer);
+        }
+
+        void changeRecordingState() {
+            this->recording = !this->recording;
+        }
+
+        bool getRecordingState() {
+            return this->recording;
+        }
+
 };
 
 
@@ -332,14 +447,14 @@ int main() {
     Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
 
     // Testing SoundPlayer class
+    
     SoundPlayer acesSoundPlayer;
     acesSoundPlayer.loadAudio("congratulations", Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
     acesSoundPlayer.playAudio("congratulations");
 
     acesSoundPlayer.loadAudio("correct", Grafica::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
     acesSoundPlayer.playAudio("correct");
-
-
+    
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
@@ -355,13 +470,23 @@ int main() {
                 window.close();
                 break;
             case sf::Event::Resized:
-                printf("The window has been resized, width: %i, height: %i", event.size.width, event.size.height);
+                printf("The window has been resized, width: %i, height: %i\n", event.size.width, event.size.height);
                 break;
-            case sf::Event::TextEntered:
-                if (event.text.unicode < 128) {
-                    printf("%c", event.text.unicode);
+            case sf::Event::KeyReleased:
+                if (event.key.code == sf::Keyboard::Key::R && false) { // TODO: Fix recording, fails due to memory error
+                    printf("began recording\n");
+                    if (acesSoundPlayer.getRecordingState()) {
+                        std::string recording_name = "Grabacion_test";
+                        acesSoundPlayer.stopRecordingSound(recording_name);
+                        acesSoundPlayer.playAudio(recording_name);
+                    }
+                    else {
+                        acesSoundPlayer.startRecordingSound();
+                    }
+                    
                 }
             }
+
 
         }
 
