@@ -25,3 +25,5 @@ build/source/engine/shape_maker.exe
 ```
 ## Ignore the file content and go down until you find the last while lopp
 There you can see how the example was made
+
+To Make your own game, make a new file in the same engine/ directory and import the shape_maker.cpp file so the classes and functions are available to use.
