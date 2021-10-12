@@ -289,6 +289,30 @@ class Player {
 
 };
 
+class SoundPlayer {
+    std::map<std::string, sf::Sound> sounds;
+    std::map<std::string, sf::SoundBuffer> buffers;
+
+    public:
+        SoundPlayer() {};
+
+    public:
+        void loadAudio(std::string uniqueName, std::string audioPath) {
+            sf::Sound sound;
+            sf::SoundBuffer buff;
+            if (!buff.loadFromFile(audioPath)) {
+                printf("Error loading audio");
+            }
+            this->buffers.emplace(uniqueName, buff);
+            this->sounds.emplace(uniqueName, sound);
+        }
+
+        void playAudio(std::string uniqueName) {
+            this->sounds.at(uniqueName).setBuffer(this->buffers.at(uniqueName));
+            this->sounds.at(uniqueName).play();
+        }
+};
+
 
 
 // This function is to test the art i will be doing in the functions
@@ -299,27 +323,21 @@ int main() {
     AcesWindow AcesWindow(800, 600, "Ventana");
     sf::RenderWindow& window = AcesWindow.getWindow();
 
-    // Testing card class
+    // Testing Card class
     Card card_test;
     card_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
 
-    // Testing player class
+    // Testing Player class
     Player player1;
     Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
 
+    // Testing SoundPlayer class
+    SoundPlayer acesSoundPlayer;
+    acesSoundPlayer.loadAudio("congratulations", Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
+    acesSoundPlayer.playAudio("congratulations");
 
-    //Beggining SOUND module
-    sf::Sound sound;
-    sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile(Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string())) {
-        printf("Error loading audio");
-        return -1;
-    }
-    printf("Beggining audio play");
-    sound.setBuffer(buffer);
-    sound.setVolume(50);
-    sound.play();
-
+    acesSoundPlayer.loadAudio("correct", Grafica::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
+    acesSoundPlayer.playAudio("correct");
 
 
 
