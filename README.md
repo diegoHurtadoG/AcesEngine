@@ -18,7 +18,7 @@ And copy the file openal32.dll to
 build/source/engine/
 ```
 
-Done that, you can build the solution in the Build directory.
+Done that, you can build the solution in the Build directory. The build *MUST* be made in RELEASE mode.
 The example can be found in
 ```
 build/source/engine/shape_maker.exe
