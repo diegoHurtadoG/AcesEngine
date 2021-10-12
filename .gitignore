@@ -3,3 +3,4 @@ source/grafica/root_directory.h
 build/
 .vs/
 out/
+.obsidian/
