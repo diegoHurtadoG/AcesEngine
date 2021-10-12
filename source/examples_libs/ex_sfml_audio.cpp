@@ -1,11 +1,12 @@
 #include <SFML/Audio.hpp>
+#include <grafica/root_directory.h>
 
 // Example works, its included in the ex_sfml_window
 int main()
 {
     sf::Sound sound;
     sf::SoundBuffer buffer;
-    if (!buffer.loadFromFile("C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/assets/audios/VoiceOverPack/Male/congratulations.ogg")) {
+    if (!buffer.loadFromFile(Grafica::getPath("assets/audios/VoiceOverPack/congratulations.ogg").string())) {
         printf("Error loading audio");
         return -1;
     }

@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <string>
 #include <vector>
 #include <iostream>
 #include <grafica/root_directory.h>
+#include <stdlib.h>
 
 /*
     This file will be defining common art used in board games
@@ -16,6 +18,7 @@
 //      - Idea: Cada objeto que se hace en pantalla meterlo a un [], para que sea mas facil manejar las posiciones y clicks
 //      - Idea: Que las fichas que vienen en la carpeta de fotos sean los jugadores (movimientos con inputs)
 //      - Idea: Para luces, si quiero hacer, podria hacer un tipo de memorize oscuro y que el mouse sea una fuente de luz
+//      - Para manejar los vectores, podria hacer la clase Cards y Players que sea un vector de cada una, y que tengan lo metodos add y cosas asi
 
 // TODO: Classes for cards and dice
 //      Cards: - Position (Drag and Drop?)
@@ -100,7 +103,7 @@ class AcesWindow {
             this->heigth = heigth;
             this->title = title;
             this->backgroundPath = backgroundPath;
-            this->window.create(sf::VideoMode(heigth, width), title, sf::Style::Close | sf::Style::Resize); // Estudiar esto, hay un posible 4to parametro
+            this->window.create(sf::VideoMode(heigth, width), title, sf::Style::Close | sf::Style::Resize); // TODO: Estudiar esto, hay un posible 4to parametro
             try {
                 if (!this->backgroundTexture.loadFromFile(this->backgroundPath))
                 {
@@ -146,7 +149,7 @@ class AcesWindow {
 
 };
 
-void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) {
+void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) { // Se rompe con el resize
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
         auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
@@ -166,11 +169,11 @@ class Player {
     sf::Keyboard::Key right;
     sf::Keyboard::Key up;
     sf::Keyboard::Key down;
-
+    std::vector<int> movements; //0 if left, 1 if right, reset if up or down, check state by even or odd size.
 
     public:
         Player(float x = 0.0f, float y = 0.0f,
-            std::string texturePath = Grafica::getPath("assets/imgs/dice and pieces/red piece.png").string(),
+            std::string texturePath = Grafica::getPath("assets/imgs/dice and pieces/piece0.png").string(),
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0,
             int playerNumber = 1)
         {
@@ -239,15 +242,41 @@ class Player {
         void receiveInput() {
             if (sf::Keyboard::isKeyPressed(this->left)) {
                 this->sprite.move(-0.2f, 0.0f);
+
+                // Beggining sequence conditions
+                if (this->movements.empty() && !(sf::Keyboard::isKeyPressed(this->right))) {
+                    this->movements.push_back(0);
+                }
+                else if ( !(this->movements.empty()) && (this->movements.back() == 1) && !(sf::Keyboard::isKeyPressed(this->right))) {
+                    this->movements.push_back(0);
+                }
+                if ( !(this->movements.empty())&& this->movements.size() >= 5) { //Lo que pase cuando se cumpla la combinacion, pense en cambiar sprites, pero no funciono (creo que por algo de memoria)
+                    printf("Side to side combination executing");
+                    this->movements.clear();
+                    this->sprite.move(20.0f, 20.0f);
+                }
             }
             if (sf::Keyboard::isKeyPressed(this->right)) {
                 this->sprite.move(0.2f, 0.0f);
+
+                // Beggining sequence conditions
+                if (!(this->movements.empty()) && !(sf::Keyboard::isKeyPressed(this->left))) {
+                    if (this->movements.back() == 0) {
+                        this->movements.push_back(1);
+                    }
+                }
             }
             if (sf::Keyboard::isKeyPressed(this->up)) {
                 this->sprite.move(0.0f, -0.2f);
+
+                // Clearing sequence array
+                this->movements.clear();
             }
             if (sf::Keyboard::isKeyPressed(this->down)) {
                 this->sprite.move(0.0f, 0.2f);
+
+                // Clearing sequence array
+                this->movements.clear();
             }
         }
 
@@ -276,7 +305,23 @@ int main() {
 
     // Testing player class
     Player player1;
-    Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/green piece.png").string(), 0, 0, 0, 0, 2);
+    Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
+
+
+    //Beggining SOUND module
+    sf::Sound sound;
+    sf::SoundBuffer buffer;
+    if (!buffer.loadFromFile(Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string())) {
+        printf("Error loading audio");
+        return -1;
+    }
+    printf("Beggining audio play");
+    sound.setBuffer(buffer);
+    sound.setVolume(50);
+    sound.play();
+
+
+
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
