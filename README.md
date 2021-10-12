@@ -15,7 +15,7 @@ AcesEngine/third_party/SFML/extlibs/bin/{Choose between x64 or x86}/
 ```
 And copy the file openal32.dll to
 ```
-build/source/engine/
+build/source/engine/Release/
 ```
 
 Done that, you can build the solution in the Build directory. The build *MUST* be made in RELEASE mode.
