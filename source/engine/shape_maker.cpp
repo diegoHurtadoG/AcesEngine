@@ -12,7 +12,6 @@
 */
 
 // TODO: Pegarse a la pauta y ver puntajes
-//      - Idea: Para luces, si quiero hacer, podria hacer un tipo de memorize oscuro y que el mouse sea una fuente de luz
 //      - Para el remapeo de controles solo se puede la opcion del switch/case gigante
 
 
@@ -235,7 +234,7 @@ class Player {
             }
         }
 
-        void receiveInput() {
+        void receiveInput() { // Idea: Para hacer que con la secuencia cambien de color, puedo cargar las 4 texturas altiro a la clase y ir rotando en ese vector
             if (sf::Keyboard::isKeyPressed(this->left)) {
                 this->sprite.move(-0.2f, 0.0f);
 
@@ -505,7 +504,6 @@ int main() {
     acesSoundPlayer.playAudio("congratulations");
 
     acesSoundPlayer.loadAudio("correct", Grafica::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
-    acesSoundPlayer.playAudio("correct");
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
@@ -536,9 +534,10 @@ int main() {
                     }
                     
                 }
+                else if (event.key.code == sf::Keyboard::Key::C) {
+                    acesSoundPlayer.playAudio("correct");
+                }
             }
-
-
         }
 
         dragAndDropCards(card_array, window);
