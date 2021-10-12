@@ -428,11 +428,11 @@ class SoundPlayer {
 
 };
 
-class textWriter {
+class TextWriter {
     sf::Text text;
 
     public:
-        textWriter() {
+        TextWriter() {
             sf::Font font;
             if (!font.loadFromFile(Grafica::getPath("assets/fonts/Akronim-Regular.ttf").string()))
             {
@@ -444,7 +444,7 @@ class textWriter {
             this->text.setString("Placeholder string");
         }
 
-        textWriter(std::string fontPath) {
+        TextWriter(std::string fontPath) {
             sf::Font font;
             if (!font.loadFromFile(fontPath))
             {
