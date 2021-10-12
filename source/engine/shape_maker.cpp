@@ -428,7 +428,59 @@ class SoundPlayer {
 
 };
 
+class textWriter {
+    sf::Text text;
 
+    public:
+        textWriter() {
+            sf::Font font;
+            if (!font.loadFromFile(Grafica::getPath("assets/fonts/Akronim-Regular.ttf").string()))
+            {
+                printf("Error loading font");
+            }
+            this->text.setFont(font);
+            this->text.setCharacterSize(24);
+            this->text.setFillColor(sf::Color::Black);
+            this->text.setString("Placeholder string");
+        }
+
+        textWriter(std::string fontPath) {
+            sf::Font font;
+            if (!font.loadFromFile(fontPath))
+            {
+                printf("Error loading font");
+            }
+            this->text.setFont(font);
+            this->text.setCharacterSize(24);
+            this->text.setFillColor(sf::Color::Black);
+            this->text.setString("Placeholder string");
+        }
+
+    public:
+        void setString(std::string text) {
+            this->text.setString(text);
+        }
+
+        void setSize(int valueInPixels) {
+            this->text.setCharacterSize(valueInPixels);
+        }
+
+        void boldText() {
+            this->text.setStyle(this->text.getStyle() | sf::Text::Bold);
+        }
+
+        void underlineText() {
+            this->text.setStyle(this->text.getStyle() | sf::Text::Underlined);
+        }
+
+        void setPosition(float x, float y) {
+            this->text.setPosition(sf::Vector2f(x, y));
+        }
+
+        void draw(sf::RenderWindow& renderWindow, bool move = true) {
+            renderWindow.draw(this->text);
+        }
+};
 
 // This function is to test the art i will be doing in the functions
 
@@ -454,7 +506,6 @@ int main() {
 
     acesSoundPlayer.loadAudio("correct", Grafica::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
     acesSoundPlayer.playAudio("correct");
-    
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
