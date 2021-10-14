@@ -13,6 +13,9 @@
 
 // TODO: Pegarse a la pauta y ver puntajes
 //      - Para el remapeo de controles solo se puede la opcion del switch/case gigante
+//      - Abstraer los setters y getter (los que se puedan, como position) de la clase CARD y otras
+//      - El metodo draw tambien se puede abstraer para que reciba la AcesWindow
+//      - El text writer podria tener un vector de strings a dibujar y que todos tengan la misma fuente y cosas, ver si conviene
 
 
 // TODO: Classes for cards and dice
@@ -23,12 +26,31 @@
 //             - Asset
 //             - OnClick -> Roll
 
+/// Defines a fast way to make a card, ideal to board games
+/**
+*   The cards in this class can have different assets, in the assets directory there is a pre loaded card tileset, the setters and getters
+*   are public and it has the draw method, the turn over method is in process. The drag and drop is another method outside the class
+*/
 class Card {
     sf::Texture FrontTexture;
     sf::Texture BackTexture;
     sf::Sprite sprite;
 
-    // Constructor
+    /// Constructor
+    /** Default constructor for the Card class
+    * @param x a float argument, 16.0f by default
+    * @param y a float argument, 22.0f by default
+    * @param BackTexturePath a string argument, precharged asset by default
+    * @param FrontTexturePath a string argument, precharged asset by default
+    * @param firstPointAssetXBACK an int argument, represent the first coordinate x of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param firstPointAssetYBACK an int argument, represent the first coordinate y of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetXBACK an int argument, represent the second coordinate x of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetYBACK an int argument, represent the second coordinate y of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param firstPointAssetXFRONT an int argument, represent the first coordinate x of the front asset (if a tileset), default value to fit the precharged tileset
+    * @param firstPointAssetYFRONT an int argument, represent the first coordinate y of the front asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetXFRONT an int argument, represent the second coordinate x of the front asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetYFRONT an int argument, represent the second coordinate y of the front asset (if a tileset), default value to fit the precharged tileset
+    */
     public:
         Card(float x = 16.0f, float y = 22.0f, 
             std::string BackTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
@@ -50,40 +72,84 @@ class Card {
         }
 
     public:
+        /// Position setter
+        /**
+        * @param pos sf::Vector2f argument, set position
+        */
         void setPosition(sf::Vector2f pos) {
             this->sprite.setPosition(pos);
         }
+        /// Position Getter
+        /**
+        * @returns sf::Vector2f
+        */
         sf::Vector2f getPosition() {
             return this->sprite.getPosition();
         }
+        /// Back Texture setter
+        /**
+        * @param texture sf::Texture, sets a texture for the BACK of the card
+        */
         void setBackTexture(sf::Texture texture) {
             this->BackTexture = texture;
         }
+        /// Back Texture Getter
+        /**
+        * @returns sf::Texture
+        */
         sf::Texture getBackTexture() {
             return this->BackTexture;
         }
+        /// Front Texture setter
+        /**
+        * @param texture sf::Texture, sets a texture for the FRONT of the card
+        */
         void setFrontTexture(sf::Texture texture) {
             this->FrontTexture = texture;
         }
+        /// Front Texture Getter
+        /**
+        * @returns sf::Texture
+        */
         sf::Texture getFrontTexture() {
             return this->FrontTexture;
         }
+        /// Position setter
+        /**
+        * @param sprite sf::Sprite, sets a new sprite for the card
+        */
         void setSprite(sf::Sprite sprite) {
             this->sprite = sprite;
         }
+        /// Sprite Getter
+        /**
+        * @returns sf::Sprite
+        */
         sf::Sprite getSprite() {
             return this->sprite;
         }
 
+        /// Draw function
+        /**
+        * @param &renderWindow receives a reference to the window to draw
+        */
         void draw(sf::RenderWindow &renderWindow) {
             renderWindow.draw(this->sprite);
         }
 
+        /// Turn card function (in progress)
+        /**
+        * Set the texture of the card to the inverse, simulating a turn over
+        */
         void turn() {
             this->sprite.getTexture() == &this->FrontTexture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->FrontTexture);
         }
 };
 
+///  Defines a render window which allows drawing
+/**
+*   The window allows to personalize background, size, and a title
+*/
 class AcesWindow {
     sf::RenderWindow window;
     sf::Texture backgroundTexture;
@@ -92,6 +158,13 @@ class AcesWindow {
     sf::RectangleShape backgroundRectangle;
 
     public:
+        /// Constructor
+        /**
+        * @param heigth int which defines the height of the window
+        * @param width int which defines the width of the window
+        * @param title string to name the window, "Default Title" by default
+        * @param backgroundPath string to set the background of the window, precharged one as default
+        */
         AcesWindow(int heigth, int width, std::string title = "Default Title",
             std::string backgroundPath = Grafica::getPath("assets/imgs/backgrounds/0.jpg").string()) {
             this->width = width;
@@ -113,15 +186,32 @@ class AcesWindow {
         }
 
     public:
+        /// Window getter
+        /**
+        * @returns sf::RenderWindow& commonly used to give it to the draw functions
+        */
         sf::RenderWindow& getWindow() {
             return this->window;
         }
+        /// Size setter
+        /**
+        * @param height int new heigth of the window
+        * @param width int new width of the window
+        */
         void setSize(int heigth, int width) {
             this->window.setSize(sf::Vector2u(heigth, width));
         }
+        /// Size getter
+        /**
+        * @returns sf::Vector2u which represents the actual size
+        */
         sf::Vector2u getSize() {
             return this->window.getSize();
         }
+        /// Texture Setter
+        /** Sets a new background for the window
+        * @param newPath string to reference the new asset
+        */
         void setTexture(std::string newPath) {
             try {
                 if (!this->backgroundTexture.loadFromFile(newPath))
@@ -134,16 +224,29 @@ class AcesWindow {
                 std::cout << msg;
             }
         }
+        /// Update
+        /**
+        * Clears the window and draw the background
+        */
         void update() {
             this->window.clear();
             this->window.draw(backgroundRectangle);
         }
+        /// Display
+        /**
+        * Display the new window
+        */
         void display() {
             this->window.display();
         }
 
 };
 
+/// Enables the drag and drop in cards of the array
+/**
+* @param card_vector std::vector<Card*> used to define which cards are movable
+* @param &window sf::RenderWindow reference to the window in which the cards will be drawn
+*/
 void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) { // Se rompe con el resize
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
@@ -156,6 +259,11 @@ void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) 
     }
 }
 
+/// Defines the things a player can do, contains input and draw propeties (remap in progress)
+/**
+*   The players accept a maximum of 2 players locally for now, with plans to expand to 4. The defined
+*   controls are "WASD" and the arrows.
+*/      
 class Player {
     sf::Texture texture;
     sf::Sprite sprite;
@@ -167,6 +275,17 @@ class Player {
     std::vector<int> movements; //0 if left, 1 if right, reset if up or down, check state by even or odd size.
 
     public:
+        /// Constructor with default values
+        /**
+        * @param x float 0.0f by default, defines position
+        * @param y float 0.0f by default, defines position
+        * @param texturePath string path to define the texture of the player, precharged red by default
+        * @param firstPointAssetX int Defines the first x coordinate of the asset in case of using a tileset
+        * @param firstPointAssetY int Defines the first y coordinate of the asset in case of using a tileset
+        * @param secondPointAssetX int Defines the second x coordinate of the asset in case of using a tileset
+        * @param secondPointAssetY int Defines the second y coordinate of the asset in case of using a tileset
+        * @param playerNumber int defines the number of the player, 1 by default and 2 if any other int
+        */
         Player(float x = 0.0f, float y = 0.0f,
             std::string texturePath = Grafica::getPath("assets/imgs/dice and pieces/piece0.png").string(),
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0,
@@ -193,32 +312,67 @@ class Player {
         }
 
     public:
+        /// Position setter
+        /**
+        * @param pos sf::Vector2f defines position
+        */
         void setPosition(sf::Vector2f pos) {
             this->sprite.setPosition(pos);
         }
+        /// Position getter
+        /**
+        * @returns sf::Vector2f defines position
+        */
         sf::Vector2f getPosition() {
             return this->sprite.getPosition();
         }
+        /// Texture setter
+        /**
+        * @param texture sf::Texture defines texture of player
+        */
         void setTexture(sf::Texture texture) {
             this->texture = texture;
         }
+        /// Texture getter
+        /**
+        * @returns sf::Texture obtains current texture
+        */
         sf::Texture getTexture() {
             return this->texture;
         }
+        /// Sprite setter
+        /**
+        * @param sprite sf::Sprite defines player Sprite
+        */
         void setSprite(sf::Sprite sprite) {
             this->sprite = sprite;
         }
+        /// Sprite getter
+        /**
+        * @returns sf::Sprite actual player sprite
+        */
         sf::Sprite getSprite() {
             return this->sprite;
         }
+        /// Player number setter
+        /**
+        * @param playerNumber int defines player number with a maximum of 2 (4 in process)
+        */
         void setPlayerNumber(int playerNumber) {
-            this->playerNumber = playerNumber;
+            this->playerNumber = playerNumber % 2;
             this->remapInput(playerNumber);
         }
+        /// Player number getter
+        /**
+        * @returns int representing player number
+        */
         int getPlayerNumber() {
             return this->playerNumber;
         }
-
+        /// Input remapper to default values
+        /**
+        * @param playerNumber int depending on the player number set default controls
+        */
         void remapInput(int playerNumber) {
             if (playerNumber == 1) {
                 this->left = sf::Keyboard::Key::A;
@@ -233,7 +387,10 @@ class Player {
                 this->down = sf::Keyboard::Key::Down;
             }
         }
-
+        /// Input receiver and movement maker, define sequences and chords
+        /**
+        * Enables input in players
+        */
         void receiveInput() { // Idea: Para hacer que con la secuencia cambien de color, puedo cargar las 4 texturas altiro a la clase y ir rotando en ese vector
             if (sf::Keyboard::isKeyPressed(this->left)) {
                 this->sprite.move(-0.2f, 0.0f);
@@ -274,7 +431,11 @@ class Player {
                 this->movements.clear();
             }
         }
-
+        /// Defines if the player can move or not and draw it in the window
+        /**
+        * @param &renderWindow sf::RenderWindow reference to the window to draw
+        * @param move bool set if the player can move or not
+        */
         void draw(sf::RenderWindow& renderWindow, bool move = true) {
             renderWindow.draw(this->sprite);
             if (move){
@@ -284,6 +445,11 @@ class Player {
 
 };
 
+/// Defines a sound player to well... play sounds
+/**
+* One sound player can contain multiple sounds and store them with a string unique key
+* If the unique key is repeated, the first one will be played, recorder is broken
+*/
 class SoundPlayer {
     std::map<std::string, sf::Sound> sounds;
     std::map<std::string, sf::SoundBuffer> buffers;
@@ -292,11 +458,19 @@ class SoundPlayer {
     bool recording = false;
 
     public:
+        /// Default constructor
+        /**
+        *   Doesnt need to initialize anything
+        */
         SoundPlayer() {};
 
     public:
         // Audio Methods
-
+        /// Loads an audio to a buffer
+        /**
+        * @param uniqueName string defines the key of a sound
+        * @param audioPath string tell where is the audio downloaded
+        */
         void loadAudio(std::string uniqueName, std::string audioPath) {
             sf::Sound sound;
             sf::SoundBuffer buff;
@@ -306,37 +480,65 @@ class SoundPlayer {
             this->buffers.emplace(uniqueName, buff);
             this->sounds.emplace(uniqueName, sound);
         }
-
+        /// Plays an audio buffer
+        /**
+        * @param uniqueName string to identify the audio
+        */
         void playAudio(std::string uniqueName) {
             this->sounds.at(uniqueName).setBuffer(this->buffers.at(uniqueName));
             this->sounds.at(uniqueName).play();
         }
-
+        /// Stops an audio buffer
+        /**
+        * @param uniqueName string to identify the audio
+        */
         void stopAudio(std::string uniqueName) {
             this->sounds.at(uniqueName).stop();
         }
-
+        /// Set the volume of an audio buffer
+        /**
+        * @param uniqueName string to identify the audio
+        * @param vol int from 0 to 100, where 100 is the original volume
+        */
         void setVolumeAudio(std::string uniqueName, int vol) {
             this->sounds.at(uniqueName).setVolume((float) vol);
         }
-
+        /// Gets volume of an audio buffer
+        /**
+        * @param uniqueName string to identify the audio
+        * @returns float representing the actual volume
+        */
         float getVolumeAudio(std::string uniqueName) {
             this->sounds.at(uniqueName).getVolume();
         }
-
+        /// Set the pitch of an audio buffer
+        /**
+        * @param uniqueName string to identify the audio
+        * @param value float representing the pitch, 1 is the default
+        */
         void setPitchAudio(std::string uniqueName, float value) {
             this->sounds.at(uniqueName).setPitch(value);
         }
-
+        /// Gets pitch of an audio buffer
+        /**
+        * @param uniqueName string to identify the audio
+        * @returns float representing the actual pitch
+        */
         float getPitchAudio(std::string uniqueName) {
             this->sounds.at(uniqueName).getPitch();
         }
-
-        // Offset in seconds
-        float setPlayingOffsetAudio(std::string uniqueName, float offset) {
+        /// Set the offset of an audio buffer
+        /**
+        * @param uniqueName string to identify the audio
+        * @param value float representing the offset measured in seconds
+        */
+        void setPlayingOffsetAudio(std::string uniqueName, float offset) {
             this->sounds.at(uniqueName).setPlayingOffset(sf::seconds(offset));
         }
-
+        /// Set if the audio buffer is meant to loop
+        /**
+        * @param uniqueName string to identify the audio
+        */
         void loopAudio(std::string uniqueName) {
             this->sounds.at(uniqueName).setLoop(!this->sounds.at(uniqueName).getLoop());
         }
@@ -353,40 +555,68 @@ class SoundPlayer {
             this->musics.emplace(uniqueName, music);
         }
         */
-
+        /// Plays a music buffer
+        /**
+        * @param uniqueName string to identify the music
+        */
         void playMusic(std::string uniqueName) {
             this->musics.at(uniqueName).play();
         }
-
+        /// Stops a music buffer
+        /**
+        * @param uniqueName string to identify the music
+        */
         void stopMusic(std::string uniqueName) {
             this->musics.at(uniqueName).stop();
         }
-
+        /// Set the volume of a music buffer
+        /**
+        * @param uniqueName string to identify the music
+        * @param vol int from 0 to 100, where 100 is the original volume
+        */
         void setVolumeMusic(std::string uniqueName, int vol) {
             this->musics.at(uniqueName).setVolume((float)vol);
         }
-
+        /// Gets volume of a music buffer
+        /**
+        * @param uniqueName string to identify the music
+        * @returns float representing the actual volume
+        */
         float getVolumeMusic(std::string uniqueName) {
             this->musics.at(uniqueName).getVolume();
         }
-
+        /// Set the pitch of a music buffer
+        /**
+        * @param uniqueName string to identify the music
+        * @param value float representing the pitch, 1 is the default
+        */
         void setPitchMusic(std::string uniqueName, float value) {
             this->musics.at(uniqueName).setPitch(value);
         }
-
+        /// Gets pitch of a music buffer
+        /**
+        * @param uniqueName string to identify the music
+        * @returns float representing the actual pitch
+        */
         float getPitchMusic(std::string uniqueName) {
             this->musics.at(uniqueName).getPitch();
         }
-
-        // Offset in seconds
+        /// Set the offset of a music buffer
+        /**
+        * @param uniqueName string to identify the music
+        * @param value float representing the offset measured in seconds
+        */
         float setPlayingOffsetMusic(std::string uniqueName, float offset) {
             this->musics.at(uniqueName).setPlayingOffset(sf::seconds(offset));
         }
-
+        /// Set if the music buffer is meant to loop
+        /**
+        * @param uniqueName string to identify the music
+        */
         void loopMusic(std::string uniqueName) {
             this->musics.at(uniqueName).setLoop(!this->musics.at(uniqueName).getLoop());
         }
-        
+        /// Starts the recording
         void startRecordingSound() {
             if (!sf::SoundBufferRecorder::isAvailable())
             {
@@ -395,12 +625,12 @@ class SoundPlayer {
             this->recorder.start();
             this->recording = true;
         }
-
+        /// Pauses the recording, can resume
         void pauseRecordingSound() {
             this->recorder.stop();
             this->recording = false;
         }
-
+        /// Resumes the paused recording
         void resumeRecordingSound() {
             if (!sf::SoundBufferRecorder::isAvailable())
             {
@@ -409,28 +639,40 @@ class SoundPlayer {
             this->recorder.start();
             this->recording = true;
         }
-
+        /// Finishes the recording
+        /**
+        * @param uniqueName string defines the name under the record will be saved in a buffer to play
+        */
         void stopRecordingSound(std::string uniqueName) {
             this->recorder.stop();
             this->recording = false;
             const sf::SoundBuffer& buffer = recorder.getBuffer();
             this->sounds.emplace(uniqueName, buffer);
         }
-
+        /// Switches the inner state of the recorder
         void changeRecordingState() {
             this->recording = !this->recording;
         }
-
+        /// Get the inner recording state
+        /**
+        * @returns bool representing if the recorder is active or not
+        */
         bool getRecordingState() {
             return this->recording;
         }
 
 };
 
+/// Defines a text writer to render text on screen (broken)
+/**
+* The text writer is simple to use and is used to display text on the screen, comes with preloaded 
+* fonts and options, has methods to customize the text
+*/
 class TextWriter {
     sf::Text text;
 
     public:
+        /// Constructor, preloads the available options to fast and easy use
         TextWriter() {
             sf::Font font;
             if (!font.loadFromFile(Grafica::getPath("assets/fonts/Akronim-Regular.ttf").string()))
@@ -442,7 +684,10 @@ class TextWriter {
             this->text.setFillColor(sf::Color::Black);
             this->text.setString("Placeholder string");
         }
-
+        /// Constructor, uses an alternative font
+        /** 
+        * @param fontPath string loads a font from a given directory
+        */
         TextWriter(std::string fontPath) {
             sf::Font font;
             if (!font.loadFromFile(fontPath))
@@ -456,26 +701,40 @@ class TextWriter {
         }
 
     public:
+        /// Sets a string to draw
+        /**
+        * @param text string defines the string to display
+        */
         void setString(std::string text) {
             this->text.setString(text);
         }
-
+        /// Sets a size to the text
+        /**
+        * @param valueInPixels int the size of the text measured in pixels
+        */
         void setSize(int valueInPixels) {
             this->text.setCharacterSize(valueInPixels);
         }
-
+        /// Bolds the given text
         void boldText() {
             this->text.setStyle(this->text.getStyle() | sf::Text::Bold);
         }
-
+        /// Underlines the given text
         void underlineText() {
             this->text.setStyle(this->text.getStyle() | sf::Text::Underlined);
         }
-
+        /// Sets the position of the text
+        /**
+        * @param float x sets the x coordinate
+        * @param float y sets the y coordinate
+        */
         void setPosition(float x, float y) {
             this->text.setPosition(sf::Vector2f(x, y));
         }
-
+        /// Draws the text in the given window
+        /**
+        * @param &renderWindow the window in which to display the text
+        */
         void draw(sf::RenderWindow& renderWindow) {
             renderWindow.draw(this->text);
         }
