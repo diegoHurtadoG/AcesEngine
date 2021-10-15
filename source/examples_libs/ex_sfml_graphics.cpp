@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 
+/// Example of the graphics library, opens a renderWindow
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window", sf::Style::Close | sf::Style::Resize);
     sf::RectangleShape card(sf::Vector2f(50.0f, 80.0f));

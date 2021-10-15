@@ -9,7 +9,7 @@ set(THIRD_PARTY_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/gla
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glfw-3.3.2/include"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/glm-0.9.9.8"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui-1.78"
-									# "${CMAKE_CURRENT_SOURCE_DIR}/third_party/openal-soft/include"
+									#"${CMAKE_CURRENT_SOURCE_DIR}/third_party/openal-soft/include"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/OpenMesh-8.1/src"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/dr_wav"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/assimp-5.0.1/include"

@@ -1,7 +1,7 @@
 #include <SFML/Audio.hpp>
 #include <grafica/root_directory.h>
 
-// Example works, its included in the ex_sfml_window
+/// Example works, its included in the ex_sfml_window
 int main()
 {
     sf::Sound sound;

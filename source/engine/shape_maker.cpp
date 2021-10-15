@@ -11,21 +11,23 @@
         such as cards and a dice for example
 */
 
-// TODO: Pegarse a la pauta y ver puntajes
-//      - Para el remapeo de controles solo se puede la opcion del switch/case gigante
-//      - Abstraer los setters y getter (los que se puedan, como position) de la clase CARD y otras
-//      - El metodo draw tambien se puede abstraer para que reciba la AcesWindow
-//      - El text writer podria tener un vector de strings a dibujar y que todos tengan la misma fuente y cosas, ver si conviene
+/*
+ TODO: Pegarse a la pauta y ver puntajes
+      - Para el remapeo de controles solo se puede la opcion del switch/case gigante
+      - Abstraer los setters y getter (los que se puedan, como position) de la clase CARD y otras
+      - El metodo draw tambien se puede abstraer para que reciba la AcesWindow
+      - El text writer podria tener un vector de strings a dibujar y que todos tengan la misma fuente y cosas, ver si conviene
+*/
 
-
+/*
 // TODO: Classes for cards and dice
-//      Cards: - Position (Drag and Drop?)
-//             - Assets
-//             - OnClick -> show reverse
-//      Dice:  - Position (dinamic?)
-//             - Asset
-//             - OnClick -> Roll
-
+      Cards: - Position (Drag and Drop?)
+             - Assets
+             - OnClick -> show reverse
+      Dice:  - Position (dinamic?)
+             - Asset
+             - OnClick -> Roll
+*/
 
 
 ///  Defines a render window which allows drawing

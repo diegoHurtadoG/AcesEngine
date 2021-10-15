@@ -2,6 +2,8 @@
 #include <SFML/Audio.hpp>
 #include <grafica/root_directory.h>
 
+
+/// Example of Window and Audio Library, opens a window and play a sound
 int main()
 {
     /*
