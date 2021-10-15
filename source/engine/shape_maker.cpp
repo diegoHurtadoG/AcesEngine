@@ -26,125 +26,7 @@
 //             - Asset
 //             - OnClick -> Roll
 
-/// Defines a fast way to make a card, ideal to board games
-/**
-*   The cards in this class can have different assets, in the assets directory there is a pre loaded card tileset, the setters and getters
-*   are public and it has the draw method, the turn over method is in process. The drag and drop is another method outside the class
-*/
-class Card {
-    sf::Texture FrontTexture;
-    sf::Texture BackTexture;
-    sf::Sprite sprite;
 
-    /// Constructor
-    /** Default constructor for the Card class
-    * @param x a float argument, 16.0f by default
-    * @param y a float argument, 22.0f by default
-    * @param BackTexturePath a string argument, precharged asset by default
-    * @param FrontTexturePath a string argument, precharged asset by default
-    * @param firstPointAssetXBACK an int argument, represent the first coordinate x of the back asset (if a tileset), default value to fit the precharged tileset
-    * @param firstPointAssetYBACK an int argument, represent the first coordinate y of the back asset (if a tileset), default value to fit the precharged tileset
-    * @param secondPointAssetXBACK an int argument, represent the second coordinate x of the back asset (if a tileset), default value to fit the precharged tileset
-    * @param secondPointAssetYBACK an int argument, represent the second coordinate y of the back asset (if a tileset), default value to fit the precharged tileset
-    * @param firstPointAssetXFRONT an int argument, represent the first coordinate x of the front asset (if a tileset), default value to fit the precharged tileset
-    * @param firstPointAssetYFRONT an int argument, represent the first coordinate y of the front asset (if a tileset), default value to fit the precharged tileset
-    * @param secondPointAssetXFRONT an int argument, represent the second coordinate x of the front asset (if a tileset), default value to fit the precharged tileset
-    * @param secondPointAssetYFRONT an int argument, represent the second coordinate y of the front asset (if a tileset), default value to fit the precharged tileset
-    */
-    public:
-        Card(float x = 16.0f, float y = 22.0f, 
-            std::string BackTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
-            std::string FrontTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
-            int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
-            int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
-        {
-            if (!this->BackTexture.loadFromFile(BackTexturePath, sf::IntRect(firstPointAssetXBACK, firstPointAssetYBACK, secondPointAssetXBACK, secondPointAssetYBACK)))
-            {
-                printf("Error loading Back texture");
-            }
-            if (!this->FrontTexture.loadFromFile(FrontTexturePath, sf::IntRect(firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT)))
-            {
-                printf("Error loading Front texture");
-            }
-            this->sprite.setTexture(this->FrontTexture);
-            this->sprite.setPosition(sf::Vector2f(x, y));
-            this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
-        }
-
-    public:
-        /// Position setter
-        /**
-        * @param pos sf::Vector2f argument, set position
-        */
-        void setPosition(sf::Vector2f pos) {
-            this->sprite.setPosition(pos);
-        }
-        /// Position Getter
-        /**
-        * @returns sf::Vector2f
-        */
-        sf::Vector2f getPosition() {
-            return this->sprite.getPosition();
-        }
-        /// Back Texture setter
-        /**
-        * @param texture sf::Texture, sets a texture for the BACK of the card
-        */
-        void setBackTexture(sf::Texture texture) {
-            this->BackTexture = texture;
-        }
-        /// Back Texture Getter
-        /**
-        * @returns sf::Texture
-        */
-        sf::Texture getBackTexture() {
-            return this->BackTexture;
-        }
-        /// Front Texture setter
-        /**
-        * @param texture sf::Texture, sets a texture for the FRONT of the card
-        */
-        void setFrontTexture(sf::Texture texture) {
-            this->FrontTexture = texture;
-        }
-        /// Front Texture Getter
-        /**
-        * @returns sf::Texture
-        */
-        sf::Texture getFrontTexture() {
-            return this->FrontTexture;
-        }
-        /// Position setter
-        /**
-        * @param sprite sf::Sprite, sets a new sprite for the card
-        */
-        void setSprite(sf::Sprite sprite) {
-            this->sprite = sprite;
-        }
-        /// Sprite Getter
-        /**
-        * @returns sf::Sprite
-        */
-        sf::Sprite getSprite() {
-            return this->sprite;
-        }
-
-        /// Draw function
-        /**
-        * @param &renderWindow receives a reference to the window to draw
-        */
-        void draw(sf::RenderWindow &renderWindow) {
-            renderWindow.draw(this->sprite);
-        }
-
-        /// Turn card function (in progress)
-        /**
-        * Set the texture of the card to the inverse, simulating a turn over
-        */
-        void turn() {
-            this->sprite.getTexture() == &this->FrontTexture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->FrontTexture);
-        }
-};
 
 ///  Defines a render window which allows drawing
 /**
@@ -242,18 +124,141 @@ class AcesWindow {
 
 };
 
+/// Defines a fast way to make a card, ideal to board games
+/**
+*   The cards in this class can have different assets, in the assets directory there is a pre loaded card tileset, the setters and getters
+*   are public and it has the draw method, the turn over method is in process. The drag and drop is another method outside the class
+*/
+class Card {
+    sf::Texture FrontTexture;
+    sf::Texture BackTexture;
+    sf::Sprite sprite;
+
+    /// Constructor
+    /** Default constructor for the Card class
+    * @param x a float argument, 16.0f by default
+    * @param y a float argument, 22.0f by default
+    * @param BackTexturePath a string argument, precharged asset by default
+    * @param FrontTexturePath a string argument, precharged asset by default
+    * @param firstPointAssetXBACK an int argument, represent the first coordinate x of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param firstPointAssetYBACK an int argument, represent the first coordinate y of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetXBACK an int argument, represent the second coordinate x of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetYBACK an int argument, represent the second coordinate y of the back asset (if a tileset), default value to fit the precharged tileset
+    * @param firstPointAssetXFRONT an int argument, represent the first coordinate x of the front asset (if a tileset), default value to fit the precharged tileset
+    * @param firstPointAssetYFRONT an int argument, represent the first coordinate y of the front asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetXFRONT an int argument, represent the second coordinate x of the front asset (if a tileset), default value to fit the precharged tileset
+    * @param secondPointAssetYFRONT an int argument, represent the second coordinate y of the front asset (if a tileset), default value to fit the precharged tileset
+    */
+public:
+    Card(float x = 16.0f, float y = 22.0f,
+        std::string BackTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
+        std::string FrontTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
+        int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
+        int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
+    {
+        if (!this->BackTexture.loadFromFile(BackTexturePath, sf::IntRect(firstPointAssetXBACK, firstPointAssetYBACK, secondPointAssetXBACK, secondPointAssetYBACK)))
+        {
+            printf("Error loading Back texture");
+        }
+        if (!this->FrontTexture.loadFromFile(FrontTexturePath, sf::IntRect(firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT)))
+        {
+            printf("Error loading Front texture");
+        }
+        this->sprite.setTexture(this->FrontTexture);
+        this->sprite.setPosition(sf::Vector2f(x, y));
+        this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
+    }
+
+private:
+    /// Back Texture setter
+    /**
+    * @param texture sf::Texture, sets a texture for the BACK of the card
+    */
+    void setBackTexture(sf::Texture texture) {
+        this->BackTexture = texture;
+    }
+    /// Back Texture Getter
+    /**
+    * @returns sf::Texture
+    */
+    sf::Texture getBackTexture() {
+        return this->BackTexture;
+    }
+    /// Front Texture setter
+    /**
+    * @param texture sf::Texture, sets a texture for the FRONT of the card
+    */
+    void setFrontTexture(sf::Texture texture) {
+        this->FrontTexture = texture;
+    }
+    /// Front Texture Getter
+    /**
+    * @returns sf::Texture
+    */
+    sf::Texture getFrontTexture() {
+        return this->FrontTexture;
+    }
+
+public:
+    /// Sprite setter
+    /**
+    * @param sprite sf::Sprite, sets a new sprite for the card
+    */
+    void setSprite(sf::Sprite sprite) {
+        this->sprite = sprite;
+    }
+    /// Sprite Getter
+    /**
+    * @returns sf::Sprite
+    */
+    sf::Sprite getSprite() {
+        return this->sprite;
+    }
+    /// Position setter
+    /**
+    * @param x float to represent X coordinate
+    * @param y float to represent Y coordinate
+    */
+    void setPosition(float x, float y) {
+        this->sprite.setPosition(sf::Vector2f(x, y));
+    }
+    /// Position Getter
+    /**
+    * @returns sf::Vector2f
+    */
+    sf::Vector2f getPosition() {
+        return this->sprite.getPosition();
+    }
+
+    /// Draw function
+    /**
+    * @param &renderWindow receives a reference to the window to draw
+    */
+    void draw(AcesWindow& acesWindow) {
+        acesWindow.getWindow().draw(this->sprite);
+    }
+
+    /// Turn card function (in progress)
+    /**
+    * Set the texture of the card to the inverse, simulating a turn over
+    */
+    void turn() {
+        this->sprite.getTexture() == &this->FrontTexture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->FrontTexture);
+    }
+};
+
 /// Enables the drag and drop in cards of the array
 /**
 * @param card_vector std::vector<Card*> used to define which cards are movable
 * @param &window sf::RenderWindow reference to the window in which the cards will be drawn
 */
-void dragAndDropCards(std::vector<Card*> card_vector, sf::RenderWindow &window) { // Se rompe con el resize
+void dragAndDropCards(std::vector<Card*> card_vector, AcesWindow &acesWindow) { // Se rompe con el resize
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
     {
-        auto mouse_pos = sf::Mouse::getPosition(window); // Mouse position relative to the window
+        auto mouse_pos = sf::Mouse::getPosition(acesWindow.getWindow()); // Mouse position relative to the window
         for (auto i = card_vector.begin(); i != card_vector.end(); i++) {
             if ((**i).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
-                (**i).setPosition(sf::Vector2f((float)mouse_pos.x, (float)mouse_pos.y));
+                (**i).setPosition((float)mouse_pos.x, (float)mouse_pos.y);
             }
         }
     }
@@ -311,21 +316,7 @@ class Player {
            
         }
 
-    public:
-        /// Position setter
-        /**
-        * @param pos sf::Vector2f defines position
-        */
-        void setPosition(sf::Vector2f pos) {
-            this->sprite.setPosition(pos);
-        }
-        /// Position getter
-        /**
-        * @returns sf::Vector2f defines position
-        */
-        sf::Vector2f getPosition() {
-            return this->sprite.getPosition();
-        }
+    private:
         /// Texture setter
         /**
         * @param texture sf::Texture defines texture of player
@@ -353,6 +344,23 @@ class Player {
         */
         sf::Sprite getSprite() {
             return this->sprite;
+        }
+
+    public:
+        /// Position setter
+        /**
+        * @param x float defines x coordinate
+        * @param y float defines y coordinate
+        */
+        void setPosition(float x, float y) {
+            this->sprite.setPosition(sf::Vector2f(x, y));
+        }
+        /// Position getter
+        /**
+        * @returns sf::Vector2f defines position
+        */
+        sf::Vector2f getPosition() {
+            return this->sprite.getPosition();
         }
         /// Player number setter
         /**
@@ -436,8 +444,8 @@ class Player {
         * @param &renderWindow sf::RenderWindow reference to the window to draw
         * @param move bool set if the player can move or not
         */
-        void draw(sf::RenderWindow& renderWindow, bool move = true) {
-            renderWindow.draw(this->sprite);
+        void draw(AcesWindow& acesWindow, bool move = true) {
+            acesWindow.getWindow().draw(this->sprite);
             if (move){
                 this->receiveInput();
             }
@@ -735,8 +743,8 @@ class TextWriter {
         /**
         * @param &renderWindow the window in which to display the text
         */
-        void draw(sf::RenderWindow& renderWindow) {
-            renderWindow.draw(this->text);
+        void draw(AcesWindow& acesWindow) {
+            acesWindow.getWindow().draw(this->text);
         }
 };
 
@@ -799,11 +807,11 @@ int main() {
             }
         }
 
-        dragAndDropCards(card_array, window);
+        dragAndDropCards(card_array, AcesWindow);
         AcesWindow.update();
-        card_test.draw(window); // Podria poner un for en card_array y dibujar todas
-        player1.draw(window);
-        player2.draw(window);
+        card_test.draw(AcesWindow); // Podria poner un for en card_array y dibujar todas
+        player1.draw(AcesWindow);
+        player2.draw(AcesWindow);
         AcesWindow.display();
 
     }
