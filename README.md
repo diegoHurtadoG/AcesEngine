@@ -14,6 +14,11 @@ cd build
 cmake ../AcesEngine
 ```
 ---
+
+## Open the solution in VS and build the engine/shape_maker solution.
+It is important that the build **MUST** be made in **RELEASE** mode. Before opening the example.exe, there is one thing you need to do
+
+---
 ###  If x86 architecture
 Go to 
 ```
@@ -31,7 +36,7 @@ And copy the file openal32.dll to
 build/source/engine/Release/
 ```
 ---
-Done that, you can build the solution in the Build directory. The build **MUST** be made in **RELEASE** mode.
+Done that, you can build the solution in the Build directory. 
 The example can be found in
 ```
 build/source/engine/Release/shape_maker.exe
