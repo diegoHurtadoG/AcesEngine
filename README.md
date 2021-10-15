@@ -16,7 +16,7 @@ cmake ../AcesEngine
 ---
 
 
-## -Open the solution in VS and build the engine/shape_maker solution-
+## - Open the solution in VS and build the engine/shape_maker solution -
 It is important that the build **MUST** be made in **RELEASE** mode. Before opening the example.exe, there is one thing you need to do
 
 
