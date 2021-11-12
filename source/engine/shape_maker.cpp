@@ -14,12 +14,12 @@
 /*
  EXTRA MILESTONE 1 TODO: Pegarse a la pauta y ver puntajes
       - Para el remapeo de controles solo se puede la opcion del switch/case gigante
-      - Abstraer los setters y getter (los que se puedan, como position) de la clase CARD y otras
-      - El metodo draw tambien se puede abstraer para que reciba la AcesWindow
       - El text writer podria tener un vector de strings a dibujar y que todos tengan la misma fuente y cosas, ver si conviene
 */
 
 /*
+ TODO MILESTONE 2: TERMINAR TEXT RENDERER Y EN VOLA EL RECORDER -> GANAR BONUS DE AVANCES MILESTONE 1
+ 
  MILESTONE 2 TODO: Classes for cards and dice, Usando Component Model
       Cards: - Position (Drag and Drop?)
              - Assets
@@ -220,8 +220,6 @@ public:
     sf::Sprite getSprite() {
         return this->sprite;
     }
-
-
 };
 
 /// Defines a fast way to make a card, ideal to board games
@@ -290,27 +288,12 @@ public:
     }
 };
 
-/// Enables the drag and drop in cards of the array
-/**
-* @param card_vector std::vector<Card*> used to define which cards are movable
-* @param &window sf::RenderWindow reference to the window in which the cards will be drawn
-*/
-void dragAndDropCards(std::vector<Card*> card_vector, AcesWindow &acesWindow) { // Se rompe con el resize
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        auto mouse_pos = sf::Mouse::getPosition(acesWindow.getWindow()); // Mouse position relative to the window
-        for (auto i = card_vector.begin(); i != card_vector.end(); i++) {
-            if ((**i).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
-                (**i).setPosition((float)mouse_pos.x, (float)mouse_pos.y);
-            }
-        }
-    }
-}
-
 /// Defines the things a player can do, contains input and draw propeties (remap in progress)
 /**
 *   The players accept a maximum of 2 players locally for now, with plans to expand to 4. The defined
 *   controls are "WASD" and the arrows.
+* 
+*   Has a drawable component
 */      
 class Player : public Drawable{
     int playerNumber;
@@ -728,7 +711,24 @@ class TextWriter {
         }
 };
 
-// This function is to test the art i will be doing in the functions
+/// Enables the drag and drop in cards of the array
+/**
+* @param card_vector std::vector<Card*> used to define which cards are movable
+* @param &window sf::RenderWindow reference to the window in which the cards will be drawn
+*/
+void dragAndDropCards(std::vector<Card*> card_vector, AcesWindow& acesWindow) { // Se rompe con el resize
+    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+    {
+        auto mouse_pos = sf::Mouse::getPosition(acesWindow.getWindow()); // Mouse position relative to the window
+        for (auto i = card_vector.begin(); i != card_vector.end(); i++) {
+            if ((**i).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
+                (**i).setPosition((float)mouse_pos.x, (float)mouse_pos.y);
+            }
+        }
+    }
+}
+
+// This function is to test the art I will be doing in the functions
 
 int main() {
     std::vector<Card*> card_array;
@@ -798,7 +798,7 @@ int main() {
     return 0;
 }
 
-// Old working classes repository
+// ######################## Pre Component Model Pattern working classes repository #############################
 
 /// Defines a fast way to make a card, ideal to board games
 /**
