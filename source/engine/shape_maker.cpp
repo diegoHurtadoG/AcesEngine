@@ -228,9 +228,10 @@ public:
 /**
 *   The cards in this class can have different assets, in the assets directory there is a pre loaded card tileset, the setters and getters
 *   are public and it has the draw method, the turn over method is in process. The drag and drop is another method outside the class
+* 
+*   Has a Drawable component
 */
 class Card : public Drawable {
-    sf::Texture FrontTexture;
     sf::Texture BackTexture;
 
 
@@ -285,7 +286,7 @@ public:
     * Set the texture of the card to the inverse, simulating a turn over
     */
     void turn() {
-        this->sprite.getTexture() == &this->FrontTexture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->FrontTexture);
+        this->sprite.getTexture() == &this->texture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->texture);
     }
 };
 
@@ -311,9 +312,7 @@ void dragAndDropCards(std::vector<Card*> card_vector, AcesWindow &acesWindow) { 
 *   The players accept a maximum of 2 players locally for now, with plans to expand to 4. The defined
 *   controls are "WASD" and the arrows.
 */      
-class Player {
-    sf::Texture texture;
-    sf::Sprite sprite;
+class Player : public Drawable{
     int playerNumber;
     sf::Keyboard::Key left;
     sf::Keyboard::Key right;
@@ -336,74 +335,13 @@ class Player {
         Player(float x = 0.0f, float y = 0.0f,
             std::string texturePath = Grafica::getPath("assets/imgs/dice and pieces/piece0.png").string(),
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0,
-            int playerNumber = 1)
+            int playerNumber = 1) : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
         {
-            if ((firstPointAssetX != secondPointAssetX) && (firstPointAssetY != secondPointAssetY)) {
-                if (!this->texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
-                {
-                    printf("Error loading Back texture");
-                }
-            }
-            else {
-                if (!this->texture.loadFromFile(texturePath))
-                {
-                    printf("Error loading Back texture");
-                }
-            }
-            this->sprite.setTexture(this->texture);
-            this->sprite.setPosition(sf::Vector2f(x, y));
-            this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
             this->playerNumber = playerNumber;
             this->remapInput(this->playerNumber);
-           
-        }
-
-    protected:
-        /// Texture setter
-        /**
-        * @param texture sf::Texture defines texture of player
-        */
-        void setTexture(sf::Texture texture) {
-            this->texture = texture;
-        }
-        /// Texture getter
-        /**
-        * @returns sf::Texture obtains current texture
-        */
-        sf::Texture getTexture() {
-            return this->texture;
-        }
-        /// Sprite setter
-        /**
-        * @param sprite sf::Sprite defines player Sprite
-        */
-        void setSprite(sf::Sprite sprite) {
-            this->sprite = sprite;
-        }
-        /// Sprite getter
-        /**
-        * @returns sf::Sprite actual player sprite
-        */
-        sf::Sprite getSprite() {
-            return this->sprite;
         }
 
     public:
-        /// Position setter
-        /**
-        * @param x float defines x coordinate
-        * @param y float defines y coordinate
-        */
-        void setPosition(float x, float y) {
-            this->sprite.setPosition(sf::Vector2f(x, y));
-        }
-        /// Position getter
-        /**
-        * @returns sf::Vector2f defines position
-        */
-        sf::Vector2f getPosition() {
-            return this->sprite.getPosition();
-        }
         /// Player number setter
         /**
         * @param playerNumber int defines player number with a maximum of 2 (4 in process)
@@ -481,7 +419,7 @@ class Player {
                 this->movements.clear();
             }
         }
-        /// Defines if the player can move or not and draw it in the window
+        /// Defines if the player can move or not and draw it in the window, overrides the base class function because of the receiveInput method
         /**
         * @param &renderWindow sf::RenderWindow reference to the window to draw
         * @param move bool set if the player can move or not
