@@ -261,6 +261,93 @@ public:
     }
 };
 
+/// Base class to an object that has input, keys must be defined in specific class
+/**
+*   This class already expands the drawable class, overrides the draw() method to enable input
+*/
+class Inputable : public Drawable {
+protected:
+    sf::Keyboard::Key left;
+    sf::Keyboard::Key right;
+    sf::Keyboard::Key up;
+    sf::Keyboard::Key down;
+    std::vector<int> movements; //0 if left, 1 if right, reset if up or down, check state by even or odd size.
+
+public:
+    /// Constructor
+    /** Default constructor for every draggable item, just calls the drawable constructor
+    * @param x a float argument
+    * @param y a float argument
+    * @param texturePath a string argument
+    * @param firstPointAssetX an int argument, represent the first coordinate x of the front asset (if a tileset)
+    * @param firstPointAssetY an int argument, represent the first coordinate y of the front asset (if a tileset)
+    * @param secondPointAssetX an int argument, represent the second coordinate x of the front asset (if a tileset)
+    * @param secondPointAssetY an int argument, represent the second coordinate y of the front asset (if a tileset)
+    */
+    Inputable(float x, float y,
+        std::string texturePath,
+        int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY)
+        : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
+    {}
+
+public:
+    /// Input receiver and movement maker, define sequences and chords
+    /**
+    * Enables input in players
+    */
+    void receiveInput() { // Idea: Para hacer que con la secuencia cambien de color, puedo cargar las 4 texturas altiro a la clase y ir rotando en ese vector
+        if (sf::Keyboard::isKeyPressed(this->left)) {
+            this->sprite.move(-0.2f, 0.0f);
+
+            // Beggining sequence conditions
+            if (this->movements.empty() && !(sf::Keyboard::isKeyPressed(this->right))) {
+                this->movements.push_back(0);
+            }
+            else if (!(this->movements.empty()) && (this->movements.back() == 1) && !(sf::Keyboard::isKeyPressed(this->right))) {
+                this->movements.push_back(0);
+            }
+            if (!(this->movements.empty()) && this->movements.size() >= 5) { //Lo que pase cuando se cumpla la combinacion, pense en cambiar sprites, pero no funciono (creo que por algo de memoria)
+                printf("Side to side combination executing");
+                this->movements.clear();
+                this->sprite.move(20.0f, 20.0f);
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(this->right)) {
+            this->sprite.move(0.2f, 0.0f);
+
+            // Beggining sequence conditions
+            if (!(this->movements.empty()) && !(sf::Keyboard::isKeyPressed(this->left))) {
+                if (this->movements.back() == 0) {
+                    this->movements.push_back(1);
+                }
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(this->up)) {
+            this->sprite.move(0.0f, -0.2f);
+
+            // Clearing sequence array
+            this->movements.clear();
+        }
+        if (sf::Keyboard::isKeyPressed(this->down)) {
+            this->sprite.move(0.0f, 0.2f);
+
+            // Clearing sequence array
+            this->movements.clear();
+        }
+    }
+    /// Defines if the player can move or not and draw it in the window, overrides the base class function because of the receiveInput method
+    /**
+    * @param &renderWindow sf::RenderWindow reference to the window to draw
+    * @param move bool set if the player can move or not
+    */
+    void draw(AcesWindow& acesWindow, bool move = true) {
+        acesWindow.getWindow().draw(this->sprite);
+        if (move) {
+            this->receiveInput();
+        }
+    }
+};
+
 /// Defines a fast way to make a card, ideal to board games
 /**
 *   The cards in this class can have different assets, in the assets directory there is a pre loaded card tileset, the setters and getters
@@ -326,20 +413,15 @@ public:
     }
 };
 
-/// Defines the things a player can do, contains input and draw propeties (remap in progress)
+/// Defines the things a player can do, contains input and draw propeties, input keys must be specified (remapInput method in this case)
 /**
 *   The players accept a maximum of 2 players locally for now, with plans to expand to 4. The defined
 *   controls are "WASD" and the arrows.
-* 
-*   Has a drawable component
+*   
+*   Has an inputable component
 */      
-class Player : public Drawable{
+class Player : public Inputable{
     int playerNumber;
-    sf::Keyboard::Key left;
-    sf::Keyboard::Key right;
-    sf::Keyboard::Key up;
-    sf::Keyboard::Key down;
-    std::vector<int> movements; //0 if left, 1 if right, reset if up or down, check state by even or odd size.
 
     public:
         /// Constructor with default values
@@ -356,7 +438,7 @@ class Player : public Drawable{
         Player(float x = 0.0f, float y = 0.0f,
             std::string texturePath = Grafica::getPath("assets/imgs/dice and pieces/piece0.png").string(),
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0,
-            int playerNumber = 1) : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
+            int playerNumber = 1) : Inputable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
         {
             this->playerNumber = playerNumber;
             this->remapInput(this->playerNumber);
@@ -396,62 +478,6 @@ class Player : public Drawable{
                 this->down = sf::Keyboard::Key::Down;
             }
         }
-        /// Input receiver and movement maker, define sequences and chords
-        /**
-        * Enables input in players
-        */
-        void receiveInput() { // Idea: Para hacer que con la secuencia cambien de color, puedo cargar las 4 texturas altiro a la clase y ir rotando en ese vector
-            if (sf::Keyboard::isKeyPressed(this->left)) {
-                this->sprite.move(-0.2f, 0.0f);
-
-                // Beggining sequence conditions
-                if (this->movements.empty() && !(sf::Keyboard::isKeyPressed(this->right))) {
-                    this->movements.push_back(0);
-                }
-                else if ( !(this->movements.empty()) && (this->movements.back() == 1) && !(sf::Keyboard::isKeyPressed(this->right))) {
-                    this->movements.push_back(0);
-                }
-                if ( !(this->movements.empty())&& this->movements.size() >= 5) { //Lo que pase cuando se cumpla la combinacion, pense en cambiar sprites, pero no funciono (creo que por algo de memoria)
-                    printf("Side to side combination executing");
-                    this->movements.clear();
-                    this->sprite.move(20.0f, 20.0f);
-                }
-            }
-            if (sf::Keyboard::isKeyPressed(this->right)) {
-                this->sprite.move(0.2f, 0.0f);
-
-                // Beggining sequence conditions
-                if (!(this->movements.empty()) && !(sf::Keyboard::isKeyPressed(this->left))) {
-                    if (this->movements.back() == 0) {
-                        this->movements.push_back(1);
-                    }
-                }
-            }
-            if (sf::Keyboard::isKeyPressed(this->up)) {
-                this->sprite.move(0.0f, -0.2f);
-
-                // Clearing sequence array
-                this->movements.clear();
-            }
-            if (sf::Keyboard::isKeyPressed(this->down)) {
-                this->sprite.move(0.0f, 0.2f);
-
-                // Clearing sequence array
-                this->movements.clear();
-            }
-        }
-        /// Defines if the player can move or not and draw it in the window, overrides the base class function because of the receiveInput method
-        /**
-        * @param &renderWindow sf::RenderWindow reference to the window to draw
-        * @param move bool set if the player can move or not
-        */
-        void draw(AcesWindow& acesWindow, bool move = true) {
-            acesWindow.getWindow().draw(this->sprite);
-            if (move){
-                this->receiveInput();
-            }
-        }
-
 };
 
 /// Defines a sound player to well... play sounds
@@ -749,20 +775,33 @@ class TextWriter {
         }
 };
 
-/// Enables the drag and drop of objects in the array
+/// Enables the drag and drop of objects in the array and draw them
 /**
 * @param drag_vector std::vector<Draggable*> used to define which objects are movables, accept every object that uses the Draggable class
 * @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
 */
 void enableDraggables(std::vector<Draggable*> drag_vector, AcesWindow& acesWindow) {
     for (auto i = drag_vector.begin(); i != drag_vector.end(); i++) {
+        (**i).draw(acesWindow);
         (**i).enableDrag(acesWindow);
+    }
+}
+
+/// Enable the input of objects in the array and draw them
+/**
+* @param inputable_vector std::vector<Inputable*> Used to draw and enable input of every Inputable object in the array
+* @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
+*/
+void enableInputables(std::vector<Inputable*> inputable_vector, AcesWindow& acesWindow) {
+    for (auto i = inputable_vector.begin(); i != inputable_vector.end(); i++) {
+        (**i).draw(acesWindow);
     }
 }
 
 // This function is to test the art I will be doing in the functions
 int main() {
     std::vector<Draggable*> draggable_array;
+    std::vector<Inputable*> inputable_array;
 
     AcesWindow AcesWindow(800, 600, "Ventana");
     sf::RenderWindow& window = AcesWindow.getWindow();
@@ -774,6 +813,8 @@ int main() {
     // Testing Player class
     Player player1;
     Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
+    inputable_array.push_back(&player1);
+    inputable_array.push_back(&player2);
 
     // Testing SoundPlayer class
     
@@ -818,11 +859,9 @@ int main() {
             }
         }
 
-        enableDraggables(draggable_array, AcesWindow);
         AcesWindow.update();
-        card_test.draw(AcesWindow); // Podria poner un for en card_array y dibujar todas
-        player1.draw(AcesWindow);
-        player2.draw(AcesWindow);
+        enableDraggables(draggable_array, AcesWindow);
+        enableInputables(inputable_array, AcesWindow);
         AcesWindow.display();
 
     }
