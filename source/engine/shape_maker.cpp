@@ -222,6 +222,45 @@ public:
     }
 };
 
+/// Base class to an object that can be dragged in the screen
+/**
+*   This class already expands the drawable class (an object can not be dragged but not drawn)
+*/
+class Draggable : public Drawable {
+
+public:
+    /// Constructor
+    /** Default constructor for every draggable item, just calls the drawable constructor
+    * @param x a float argument
+    * @param y a float argument
+    * @param texturePath a string argument
+    * @param firstPointAssetX an int argument, represent the first coordinate x of the front asset (if a tileset)
+    * @param firstPointAssetY an int argument, represent the first coordinate y of the front asset (if a tileset)
+    * @param secondPointAssetX an int argument, represent the second coordinate x of the front asset (if a tileset)
+    * @param secondPointAssetY an int argument, represent the second coordinate y of the front asset (if a tileset)
+    */
+    Draggable(float x, float y,
+        std::string texturePath,
+        int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY)
+        : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
+    {}
+
+public:
+    /// Enables the drag and drop of the current object
+    /**
+    * @param &window sf::RenderWindow reference to the window in which the cards will be drawn
+    */
+    void enableDrag(AcesWindow& acesWindow) {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+        {
+            auto mouse_pos = sf::Mouse::getPosition(acesWindow.getWindow()); // Mouse position relative to the window
+            if ((*this).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
+                (*this).setPosition((float)mouse_pos.x, (float)mouse_pos.y);
+            }
+        }
+    }
+};
+
 /// Defines a fast way to make a card, ideal to board games
 /**
 *   The cards in this class can have different assets, in the assets directory there is a pre loaded card tileset, the setters and getters
@@ -229,9 +268,8 @@ public:
 * 
 *   Has a Drawable component
 */
-class Card : public Drawable {
+class Card : public Draggable {
     sf::Texture BackTexture;
-
 
 public:
     /// Constructor
@@ -254,7 +292,7 @@ public:
         std::string FrontTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
         int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
         int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
-        : Drawable(x, y, FrontTexturePath, firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT)
+        : Draggable(x, y, FrontTexturePath, firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT)
     {
         if (!this->BackTexture.loadFromFile(BackTexturePath, sf::IntRect(firstPointAssetXBACK, firstPointAssetYBACK, secondPointAssetXBACK, secondPointAssetYBACK)))
         {
@@ -711,34 +749,28 @@ class TextWriter {
         }
 };
 
-/// Enables the drag and drop in cards of the array
+/// Enables the drag and drop of objects in the array
 /**
-* @param card_vector std::vector<Card*> used to define which cards are movable
-* @param &window sf::RenderWindow reference to the window in which the cards will be drawn
+* @param drag_vector std::vector<Draggable*> used to define which objects are movables, accept every object that uses the Draggable class
+* @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
 */
-void dragAndDropCards(std::vector<Card*> card_vector, AcesWindow& acesWindow) { // Se rompe con el resize
-    if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
-    {
-        auto mouse_pos = sf::Mouse::getPosition(acesWindow.getWindow()); // Mouse position relative to the window
-        for (auto i = card_vector.begin(); i != card_vector.end(); i++) {
-            if ((**i).getSprite().getGlobalBounds().contains((float)mouse_pos.x, (float)mouse_pos.y)) {
-                (**i).setPosition((float)mouse_pos.x, (float)mouse_pos.y);
-            }
-        }
+void enableDraggables(std::vector<Draggable*> drag_vector, AcesWindow& acesWindow) {
+    for (auto i = drag_vector.begin(); i != drag_vector.end(); i++) {
+        (**i).enableDrag(acesWindow);
     }
 }
 
 // This function is to test the art I will be doing in the functions
 
 int main() {
-    std::vector<Card*> card_array;
+    std::vector<Draggable*> draggable_array;
 
     AcesWindow AcesWindow(800, 600, "Ventana");
     sf::RenderWindow& window = AcesWindow.getWindow();
 
     // Testing Card class
     Card card_test;
-    card_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
+    draggable_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
 
     // Testing Player class
     Player player1;
@@ -787,7 +819,7 @@ int main() {
             }
         }
 
-        dragAndDropCards(card_array, AcesWindow);
+        enableDraggables(draggable_array, AcesWindow);
         AcesWindow.update();
         card_test.draw(AcesWindow); // Podria poner un for en card_array y dibujar todas
         player1.draw(AcesWindow);
