@@ -761,7 +761,6 @@ void enableDraggables(std::vector<Draggable*> drag_vector, AcesWindow& acesWindo
 }
 
 // This function is to test the art I will be doing in the functions
-
 int main() {
     std::vector<Draggable*> draggable_array;
 
