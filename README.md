@@ -53,19 +53,30 @@ To Make your own game, make a new file in the same engine/ directory and import 
 # Documentation
 The official documentation is made in [Doxygen](https://www.doxygen.nl/index.html) and can be found in the docs/ directory, to open it correctly open
 ```
-docs/index.html
+docs/html/index.html
 ```
 with your favorite browser and then you can navigate.
 
 ---
-There is one function that was not taken into account by Doxygen, so here it is:
+There were some functions that were not taken into account by Doxygen, so here they are:
 ```
-/// Enables the drag and drop in cards of the array
+/// Enables the drag and drop of objects in the array and draw them
 /**
-* @param card_vector std::vector<Card*> used to define which cards are movable
-* @param &window sf::RenderWindow reference to the window in which the cards will be drawn
+* @param drag_vector std::vector<Draggable*> used to define which objects are movables, accept every object that uses the Draggable class
+* @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
 */
-void dragAndDropCards(std::vector<Card*> card_vector, AcesWindow &acesWindow)
+
+void enableDraggables(std::vector<Draggable*> drag_vector, AcesWindow& acesWindow) {...}
+
+
+/// Enable the input of objects in the array and draw them
+/**
+* @param inputable_vector std::vector<Inputable*> Used to draw and enable input of every Inputable object in the array
+* @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
+*/
+
+void enableInputables(std::vector<Inputable*> inputable_vector, AcesWindow& acesWindow) {...}
+}
 ```
 
 ---
@@ -76,30 +87,31 @@ void dragAndDropCards(std::vector<Card*> card_vector, AcesWindow &acesWindow)
 Use Example:
 ```
 int main() {
-    std::vector<Card*> card_array;
+    std::vector<Draggable*> draggable_array;
+    std::vector<Inputable*> inputable_array;
 
     AcesWindow AcesWindow(800, 600, "Ventana");
     sf::RenderWindow& window = AcesWindow.getWindow();
-	
-	// Using default card Constructor
+
+    // Testing Card class
     Card card_test;
-    card_array.push_back(&card_test); 
-	
-	// Using both player constructors
+    draggable_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
+
+    // Testing Player class
     Player player1;
     Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
+    inputable_array.push_back(&player1);
+    inputable_array.push_back(&player2);
 
-    // Initializing sound player and loading an audio with
-	//		key "congratulations"
+    // Testing SoundPlayer class
     SoundPlayer acesSoundPlayer;
     acesSoundPlayer.loadAudio("congratulations", Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
     acesSoundPlayer.playAudio("congratulations");
-	
-	// Loading a second audio to the same player
+
     acesSoundPlayer.loadAudio("correct", Grafica::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
-    acesSoundPlayer.playAudio("correct");
 
     // run the program as long as the window is open
+    // TODO: abstract while loop to use AcesWindow instead of window
     while (window.isOpen())
     {
 
@@ -114,21 +126,28 @@ int main() {
             case sf::Event::Resized:
                 printf("The window has been resized, width: %i, height: %i\n", event.size.width, event.size.height);
                 break;
+            case sf::Event::KeyReleased:
+                if (event.key.code == sf::Keyboard::Key::R && false) { // TODO: Fix recording, fails due to memory error
+                    printf("began recording\n");
+                    if (acesSoundPlayer.getRecordingState()) {
+                        std::string recording_name = "Grabacion_test";
+                        acesSoundPlayer.stopRecordingSound(recording_name);
+                        acesSoundPlayer.playAudio(recording_name);
+                    }
+                    else {
+                        acesSoundPlayer.startRecordingSound();
+                    }
+                    
+                }
+                else if (event.key.code == sf::Keyboard::Key::C) {
+                    acesSoundPlayer.playAudio("correct");
+                }
             }
-		}
-		
-		// Enable card_array to drag and drop
-        dragAndDropCards(card_array, acesWindow);
-		
-		// Clear the window and update states
+        }
+
         AcesWindow.update();
-		
-		// Every object has the "draw" method to make this easier
-        card_test.draw(acesWindow);
-        player1.draw(acesWindow);
-        player2.draw(acesWindow);
-		
-		// Displays the new status of screen
+        enableDraggables(draggable_array, AcesWindow);
+        enableInputables(inputable_array, AcesWindow);
         AcesWindow.display();
 
     }
