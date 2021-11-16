@@ -1,0 +1,27 @@
+var class_sound_player =
+[
+    [ "SoundPlayer", "class_sound_player.html#ac7107aecd54bdcfac29486487768ebc6", null ],
+    [ "changeRecordingState", "class_sound_player.html#ace4eb5ff5d1498dbfc2bb8d6809b12bc", null ],
+    [ "getPitchAudio", "class_sound_player.html#adf4bfd22859c82f2f2639c77f3c723ea", null ],
+    [ "getPitchMusic", "class_sound_player.html#a37e27b973f8ba4f35ce221317c75ea02", null ],
+    [ "getRecordingState", "class_sound_player.html#a331b03d9b16d9217f5d65dc538d48a09", null ],
+    [ "getVolumeAudio", "class_sound_player.html#a65b273602a2e0f4dec7ed3e327edcd27", null ],
+    [ "getVolumeMusic", "class_sound_player.html#a7b6beffe16060870beb3109de5002a97", null ],
+    [ "loadAudio", "class_sound_player.html#ade79738e1615762881a857da4abb1077", null ],
+    [ "loopAudio", "class_sound_player.html#a42ecfc54b4014a78d5783b8b3fe45ca6", null ],
+    [ "loopMusic", "class_sound_player.html#ac2236a05d3323bcb33b33b9f2d10cc3b", null ],
+    [ "pauseRecordingSound", "class_sound_player.html#a993e5b6a732abd236ac306027ab6e7af", null ],
+    [ "playAudio", "class_sound_player.html#af9205497d3ee2d2a1e43547c1f86465c", null ],
+    [ "playMusic", "class_sound_player.html#acaa6bb30d1e1b60858dc6b4226594899", null ],
+    [ "resumeRecordingSound", "class_sound_player.html#afc8129c5a650e96b959e44503d78e851", null ],
+    [ "setPitchAudio", "class_sound_player.html#a7093d0de48dce872a43a1bbb56bb9ccc", null ],
+    [ "setPitchMusic", "class_sound_player.html#aaed2c5cc77028bbcf7f87f40909cf76c", null ],
+    [ "setPlayingOffsetAudio", "class_sound_player.html#a6cf9b9750dcb835b7a06db613e387e51", null ],
+    [ "setPlayingOffsetMusic", "class_sound_player.html#a77fddb482fa552db2166270d76dc59b6", null ],
+    [ "setVolumeAudio", "class_sound_player.html#ac91f9b74940f23b88c121d61eae9243b", null ],
+    [ "setVolumeMusic", "class_sound_player.html#a37e8b161e4fd2d5bf261e6093837689e", null ],
+    [ "startRecordingSound", "class_sound_player.html#a7bcb872dcd59913ea4ad0a8779725cca", null ],
+    [ "stopAudio", "class_sound_player.html#a2703b2fb2c660e27d87c2cdb4a05612b", null ],
+    [ "stopMusic", "class_sound_player.html#a30e18642a95f1a4de46e02b45d13729a", null ],
+    [ "stopRecordingSound", "class_sound_player.html#a5fd51afd64ebffd250bcff0f3611988d", null ]
+];
