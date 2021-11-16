@@ -413,7 +413,7 @@ public:
     }
 };
 
-/// Defines the things a player can do, contains input and draw propeties, input keys must be specified (remapInput method in this case)
+/// Defines the things a player can do, input keys must be specified (remapInput method in this case)
 /**
 *   The players accept a maximum of 2 players locally for now, with plans to expand to 4. The defined
 *   controls are "WASD" and the arrows.
@@ -817,7 +817,6 @@ int main() {
     inputable_array.push_back(&player2);
 
     // Testing SoundPlayer class
-    
     SoundPlayer acesSoundPlayer;
     acesSoundPlayer.loadAudio("congratulations", Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
     acesSoundPlayer.playAudio("congratulations");
