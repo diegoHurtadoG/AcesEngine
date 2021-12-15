@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <grafica/root_directory.h>
+#include <engine/root_directory.h>
 #include <stdlib.h>
 
 /*
@@ -123,7 +123,27 @@ class AcesWindow {
         void display() {
             this->window.display();
         }
-
+        /// Enables the drag and drop of objects in the array and draw them
+        /**
+        * @param drag_vector std::vector<Draggable*> used to define which objects are movables, accept every object that uses the Draggable class
+        * @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
+        */
+        void enableDraggables(std::vector<Draggable*> drag_vector) {
+            for (auto i = drag_vector.begin(); i != drag_vector.end(); i++) {
+                (**i).draw(*this);
+                (**i).enableDrag(*this);
+            }
+        }
+        /// Enable the input of objects in the array and draw them
+        /**
+        * @param inputable_vector std::vector<Inputable*> Used to draw and enable input of every Inputable object in the array
+        * @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
+        */
+        void enableInputables(std::vector<Inputable*> inputable_vector) {
+            for (auto i = inputable_vector.begin(); i != inputable_vector.end(); i++) {
+                (**i).draw(*this);
+            }
+        }
 };
 
 /// Base class to an object with a draw() method
@@ -275,7 +295,7 @@ protected:
 
 public:
     /// Constructor
-    /** Default constructor for every draggable item, just calls the drawable constructor
+    /** Default constructor for every draggable item, just calls the drawable constructor, sets WASD as default input in case they dont override
     * @param x a float argument
     * @param y a float argument
     * @param texturePath a string argument
@@ -288,7 +308,12 @@ public:
         std::string texturePath,
         int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY)
         : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
-    {}
+    {
+        this->left = sf::Keyboard::Key::A;
+        this->right = sf::Keyboard::Key::D;
+        this->up = sf::Keyboard::Key::W;
+        this->down = sf::Keyboard::Key::S;
+    }
 
 public:
     /// Input receiver and movement maker, define sequences and chords
@@ -420,7 +445,7 @@ public:
 *   
 *   Has an inputable component
 */      
-class Player : public Inputable{
+class Player : public Inputable {
     int playerNumber;
 
     public:
@@ -775,28 +800,6 @@ class TextWriter {
         }
 };
 
-/// Enables the drag and drop of objects in the array and draw them
-/**
-* @param drag_vector std::vector<Draggable*> used to define which objects are movables, accept every object that uses the Draggable class
-* @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
-*/
-void enableDraggables(std::vector<Draggable*> drag_vector, AcesWindow& acesWindow) {
-    for (auto i = drag_vector.begin(); i != drag_vector.end(); i++) {
-        (**i).draw(acesWindow);
-        (**i).enableDrag(acesWindow);
-    }
-}
-
-/// Enable the input of objects in the array and draw them
-/**
-* @param inputable_vector std::vector<Inputable*> Used to draw and enable input of every Inputable object in the array
-* @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
-*/
-void enableInputables(std::vector<Inputable*> inputable_vector, AcesWindow& acesWindow) {
-    for (auto i = inputable_vector.begin(); i != inputable_vector.end(); i++) {
-        (**i).draw(acesWindow);
-    }
-}
 
 // This function is to test the art I will be doing in the functions
 int main() {
@@ -859,8 +862,8 @@ int main() {
         }
 
         AcesWindow.update();
-        enableDraggables(draggable_array, AcesWindow);
-        enableInputables(inputable_array, AcesWindow);
+        AcesWindow.enableDraggables(draggable_array);
+        AcesWindow.enableInputables(inputable_array);
         AcesWindow.display();
 
     }

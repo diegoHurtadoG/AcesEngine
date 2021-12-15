@@ -1,5 +1,6 @@
 add_subdirectory(grafica)
 #add_subdirectory(examples)
 #add_subdirectory(examples_cpp)
-add_subdirectory(examples_libs)
-add_subdirectory(engine)
+#add_subdirectory(examples_libs)
+#add_subdirectory(engine)
+add_subdirectory(engine_ex)
