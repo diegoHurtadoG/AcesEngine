@@ -1,6 +1,6 @@
 #include "Player.h"
 
-namespace AcesEngine {
+namespace acesengine {
 
     class Player : public Inputable {
         int playerNumber;

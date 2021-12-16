@@ -5,12 +5,12 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <engine/root_directory.h>
 #include <stdlib.h>
 #include "Drawable.h"
+#include "AcesWindow.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
     /// Base class to an object that has input, keys must be defined in specific class
     /**
     *   This class already expands the drawable class, overrides the draw() method to enable input

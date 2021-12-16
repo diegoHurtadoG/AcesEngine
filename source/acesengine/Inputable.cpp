@@ -1,7 +1,7 @@
 #include "Inputable.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
 
     class Inputable : public Drawable {
     protected:

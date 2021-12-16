@@ -1,7 +1,7 @@
 #include "SoundPlayer.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
 
     class SoundPlayer {
         std::map<std::string, sf::Sound> sounds;

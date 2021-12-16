@@ -5,12 +5,12 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <engine/root_directory.h>
 #include <stdlib.h>
 #include "Inputable.h"
+#include "root_directory.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
 
     /// Defines the things a player can do, input keys must be specified (remapInput method in this case)
     /**
@@ -38,7 +38,7 @@ namespace AcesEngine {
         * @param playerNumber int defines the number of the player, 1 by default and 2 if any other int
         */
         Player(float x = 0.0f, float y = 0.0f,
-            std::string texturePath = Grafica::getPath("assets/imgs/dice and pieces/piece0.png").string(),
+            std::string texturePath = getPath("assets/imgs/dice and pieces/piece0.png").string(),
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0,
             int playerNumber = 1) : Inputable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY);
 

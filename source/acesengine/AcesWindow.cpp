@@ -1,7 +1,8 @@
 #include "AcesWindow.h"
+#include "root_directory.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
 
     class AcesWindow {
         sf::RenderWindow window;
@@ -12,7 +13,7 @@ namespace AcesEngine {
 
     public:
         AcesWindow(int heigth, int width, std::string title = "Default Title",
-            std::string backgroundPath = Grafica::getPath("assets/imgs/backgrounds/0.jpg").string()) {
+            std::string backgroundPath = getPath("assets/imgs/backgrounds/0.jpg").string()) {
             this->width = width;
             this->heigth = heigth;
             this->title = title;

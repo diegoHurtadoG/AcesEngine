@@ -5,11 +5,10 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <engine/root_directory.h>
 #include <stdlib.h>
 
 
-namespace AcesEngine {
+namespace acesengine {
     /// Defines a sound player to well... play sounds
     /**
     * One sound player can contain multiple sounds and store them with a string unique key

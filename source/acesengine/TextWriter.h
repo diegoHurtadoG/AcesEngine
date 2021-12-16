@@ -5,11 +5,11 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <engine/root_directory.h>
 #include <stdlib.h>
+#include "AcesWindow.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
 
     /// Defines a text writer to render text on screen (broken)
     /**

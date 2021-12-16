@@ -1,6 +1,6 @@
 #include "Drawable.h"
 
-namespace AcesEngine {
+namespace acesengine {
     class Drawable {
     protected:
         sf::Sprite sprite;

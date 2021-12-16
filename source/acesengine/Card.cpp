@@ -1,7 +1,7 @@
 #include "Card.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
 
     class Card : public Draggable {
         sf::Texture BackTexture;

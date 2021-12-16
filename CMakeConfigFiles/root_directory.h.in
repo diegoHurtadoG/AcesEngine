@@ -5,7 +5,7 @@
 
 #include <filesystem>
 
-namespace AcesEngine
+namespace acesengine
 {
 	
 static const char * const source_directory = "${CMAKE_SOURCE_DIR}/";

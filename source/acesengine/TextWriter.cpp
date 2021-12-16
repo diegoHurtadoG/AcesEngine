@@ -1,6 +1,6 @@
 #include "TextWriter.h"
 
-namespace AcesEngine {
+namespace acesengine {
 
     class TextWriter {
         sf::Text text;

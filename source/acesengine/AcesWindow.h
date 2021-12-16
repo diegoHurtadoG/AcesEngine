@@ -5,13 +5,11 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <engine/root_directory.h>
 #include <stdlib.h>
 #include "Draggable.h"
 #include "Inputable.h"
 
-namespace AcesEngine {
-
+namespace acesengine {
 
     ///  Defines a render window which allows drawing
     /**
@@ -51,8 +49,7 @@ namespace AcesEngine {
         * @param title string to name the window, "Default Title" by default
         * @param backgroundPath string to set the background of the window, precharged one as default
         */
-        AcesWindow(int heigth, int width, std::string title = "Default Title",
-            std::string backgroundPath = Grafica::getPath("assets/imgs/backgrounds/0.jpg").string());
+        AcesWindow(int heigth, int width, std::string title, std::string backgroundPath);
 
         /// Window getter
         /**

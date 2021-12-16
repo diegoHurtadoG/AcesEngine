@@ -5,12 +5,12 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include <engine/root_directory.h>
 #include <stdlib.h>
 #include "Drawable.h"
+#include "AcesWindow.h"
 
 
-namespace AcesEngine {
+namespace acesengine {
     /// Base class to an object that can be dragged in the screen
     /**
     *   This class already expands the drawable class (an object can not be dragged but not drawn)

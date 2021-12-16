@@ -5,7 +5,7 @@
 
 #include <filesystem>
 
-namespace AcesEngine
+namespace acesengine
 {
 	
 static const char * const source_directory = "C:/Users/diego/OneDrive/Desktop/Ramos/2021-2/Arquitectura de Motores de Videojuegos/Proyecto/AcesEngine/";

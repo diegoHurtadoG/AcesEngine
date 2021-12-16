@@ -1,6 +1,6 @@
 #include "Draggable.h"
 
-namespace AcesEngine {
+namespace acesengine {
     class Draggable : public Drawable {
 
     public:
