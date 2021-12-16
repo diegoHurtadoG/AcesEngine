@@ -16,7 +16,7 @@ set(THIRD_PARTY_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/third_party/gla
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/stb"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/eigen-3.3.9"
 									"${CMAKE_CURRENT_SOURCE_DIR}/third_party/SFML/include")
-set(GRAFICA_INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/source/")
+set(ACESENGINE_INCLUDE_DIRECTORY "${CMAKE_SOURCE_DIR}/source/")
 
 if(MSVC)
 	set(THIRD_PARTY_LIBRARIES glad glfw ${OPENGL_LIBRARIES} ImGui ${BULLET_LIBRARIES} OpenAL dr_wav assimp stb OpenMeshCore sfml-audio sfml-graphics sfml-network sfml-system sfml-window)
