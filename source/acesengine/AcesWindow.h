@@ -49,7 +49,8 @@ namespace acesengine {
         * @param title string to name the window, "Default Title" by default
         * @param backgroundPath string to set the background of the window, precharged one as default
         */
-        AcesWindow(int heigth, int width, std::string title, std::string backgroundPath);
+        AcesWindow(int heigth, int width, std::string title = "Default Title",
+            std::string backgroundPath = getPath("assets/imgs/backgrounds/0.jpg").string());
 
         /// Window getter
         /**

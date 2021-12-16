@@ -1,10 +1,17 @@
-#include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include <string>
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
 #include <acesengine/root_directory.h>
+#include <acesengine/acesengine.h>
+#include <acesengine/AcesWindow.h>
+#include <acesengine/Card.h>
+#include <acesengine/Draggable.h>
+#include <acesengine/Drawable.h>
+#include <acesengine/Inputable.h>
+#include <acesengine/Player.h>
+#include <acesengine/SoundPlayer.h>
+#include <acesengine/TextWriter.h>
 
 /*
     This file will be defining common art used in board games
@@ -32,29 +39,29 @@
 // This function is to test the art I will be doing in the functions
 int main() {
     namespace ae = acesengine;
-    
-    std::vector<ae::Draggable*> draggable_array;
-    std::vector<Inputable*> inputable_array;
 
-    AcesWindow AcesWindow(800, 600, "Ventana");
+    std::vector<ae::Draggable*> draggable_array;
+    std::vector<ae::Inputable*> inputable_array;
+
+    ae::AcesWindow AcesWindow(800, 600, "Ventana");
     sf::RenderWindow& window = AcesWindow.getWindow();
 
     // Testing Card class
-    Card card_test;
+    ae::Card card_test;
     draggable_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
 
     // Testing Player class
-    Player player1;
-    Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
+    ae::Player player1;
+    ae::Player player2(0.0f, 0.0f, ae::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
     inputable_array.push_back(&player1);
     inputable_array.push_back(&player2);
 
     // Testing SoundPlayer class
-    SoundPlayer acesSoundPlayer;
-    acesSoundPlayer.loadAudio("congratulations", Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
+    ae::SoundPlayer acesSoundPlayer;
+    acesSoundPlayer.loadAudio("congratulations", ae::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
     acesSoundPlayer.playAudio("congratulations");
 
-    acesSoundPlayer.loadAudio("correct", Grafica::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
+    acesSoundPlayer.loadAudio("correct", ae::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window

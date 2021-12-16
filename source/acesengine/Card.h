@@ -38,11 +38,11 @@ namespace acesengine {
         * @param secondPointAssetXFRONT an int argument, represent the second coordinate x of the front asset (if a tileset), default value to fit the precharged tileset
         * @param secondPointAssetYFRONT an int argument, represent the second coordinate y of the front asset (if a tileset), default value to fit the precharged tileset
         */
-        Card(float x, float y,
-            std::string BackTexturePath,
-            std::string FrontTexturePath,
-            int firstPointAssetXBACK, int firstPointAssetYBACK, int secondPointAssetXBACK, int secondPointAssetYBACK,
-            int firstPointAssetXFRONT, int firstPointAssetYFRONT, int secondPointAssetXFRONT, int secondPointAssetYFRONT)
+        Card(float x = 16.0f, float y = 22.0f,
+            std::string BackTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
+            std::string FrontTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
+            int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
+            int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
             : Draggable(x, y, FrontTexturePath, firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT);
 
     protected:

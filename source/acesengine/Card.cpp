@@ -1,4 +1,5 @@
 #include "Card.h"
+#include "root_directory.h"
 
 
 namespace acesengine {
@@ -8,8 +9,8 @@ namespace acesengine {
 
     public:
         Card(float x = 16.0f, float y = 22.0f,
-            std::string BackTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
-            std::string FrontTexturePath = Grafica::getPath("assets/imgs/8BitDeckAssets.png").string(),
+            std::string BackTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
+            std::string FrontTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
             int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
             int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
             : Draggable(x, y, FrontTexturePath, firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT)
