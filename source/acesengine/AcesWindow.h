@@ -7,9 +7,12 @@
 #include <iostream>
 #include <stdlib.h>
 #include "root_directory.h"
+
+#include "Drawable.h"
 #include "Draggable.h"
 #include "Inputable.h"
 
+class Drawable;
 class Draggable;
 class Inputable;
 

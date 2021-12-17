@@ -1,4 +1,7 @@
 #include "Draggable.h"
+#include "Drawable.h"
+
+class Drawable;
 
 namespace acesengine {
 

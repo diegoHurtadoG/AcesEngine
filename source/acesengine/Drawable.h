@@ -9,6 +9,7 @@
 #include "AcesWindow.h"
 
 class AcesWindow;
+
 namespace acesengine {
 
     /// Base class to an object with a draw() method

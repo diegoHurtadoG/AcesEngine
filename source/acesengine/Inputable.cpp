@@ -1,5 +1,7 @@
 #include "Inputable.h"
+#include "Drawable.h"
 
+class Drawable;
 
 namespace acesengine {
 
