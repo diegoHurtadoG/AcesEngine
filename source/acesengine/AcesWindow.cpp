@@ -4,16 +4,8 @@
 
 namespace acesengine {
 
-    class AcesWindow {
-        sf::RenderWindow window;
-        sf::Texture backgroundTexture;
-        int heigth, width;
-        std::string title, backgroundPath;
-        sf::RectangleShape backgroundRectangle;
-
-    public:
-        AcesWindow(int heigth, int width, std::string title = "Default Title",
-            std::string backgroundPath = getPath("assets/imgs/backgrounds/0.jpg").string()) {
+    AcesWindow::AcesWindow(int heigth, int width, std::string title,
+            std::string backgroundPath) {
             this->width = width;
             this->heigth = heigth;
             this->title = title;
@@ -32,51 +24,51 @@ namespace acesengine {
             }
         }
 
-        sf::RenderWindow& getWindow() {
-            return this->window;
-        }
+    sf::RenderWindow& AcesWindow::getWindow() {
+        return this->window;
+    }
 
-        void setSize(int heigth, int width) {
-            this->window.setSize(sf::Vector2u(heigth, width));
-        }
+    void AcesWindow::setSize(int heigth, int width) {
+        this->window.setSize(sf::Vector2u(heigth, width));
+    }
 
-        sf::Vector2u getSize() {
-            return this->window.getSize();
-        }
+    sf::Vector2u AcesWindow::getSize() {
+        return this->window.getSize();
+    }
 
-        void setTexture(std::string newPath) {
-            try {
-                if (!this->backgroundTexture.loadFromFile(newPath))
-                {
-                    throw("Error loading texture");
-                }
-                // Test this to see if texture really changes (not urgent)
+    void AcesWindow::setTexture(std::string newPath) {
+        try {
+            if (!this->backgroundTexture.loadFromFile(newPath))
+            {
+                throw("Error loading texture");
             }
-            catch (std::string msg) {
-                std::cout << msg;
-            }
+            // Test this to see if texture really changes (not urgent)
         }
+        catch (std::string msg) {
+            std::cout << msg;
+        }
+    }
 
-        void update() {
-            this->window.clear();
-            this->window.draw(backgroundRectangle);
-        }
+    void AcesWindow::update() {
+        this->window.clear();
+        this->window.draw(backgroundRectangle);
+    }
 
-        void display() {
-            this->window.display();
-        }
+    void AcesWindow::display() {
+        this->window.display();
+    }
 
-        void enableDraggables(std::vector<Draggable*> drag_vector) {
-            for (auto i = drag_vector.begin(); i != drag_vector.end(); i++) {
-                (**i).draw(*this);
-                (**i).enableDrag(*this);
-            }
+    void AcesWindow::enableDraggables(std::vector<Draggable*> drag_vector) {
+        for (auto i = drag_vector.begin(); i != drag_vector.end(); i++) {
+            (**i).draw(*this);
+            (**i).enableDrag(*this);
         }
+    }
 
-        void enableInputables(std::vector<Inputable*> inputable_vector) {
-            for (auto i = inputable_vector.begin(); i != inputable_vector.end(); i++) {
-                (**i).draw(*this);
-            }
+    void AcesWindow::enableInputables(std::vector<Inputable*> inputable_vector) {
+        for (auto i = inputable_vector.begin(); i != inputable_vector.end(); i++) {
+            (**i).draw(*this);
         }
-    };
+    }
+    
 };

@@ -40,7 +40,7 @@ namespace acesengine {
         Player(float x = 0.0f, float y = 0.0f,
             std::string texturePath = getPath("assets/imgs/dice and pieces/piece0.png").string(),
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0,
-            int playerNumber = 1) : Inputable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY);
+            int playerNumber = 1);
 
     public:
         /// Player number setter

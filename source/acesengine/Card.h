@@ -42,8 +42,7 @@ namespace acesengine {
             std::string BackTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
             std::string FrontTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
             int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
-            int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
-            : Draggable(x, y, FrontTexturePath, firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT);
+            int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44);
 
     protected:
         /// Back Texture setter
@@ -65,4 +64,4 @@ namespace acesengine {
         */
         void turn();
     };
-};
+}

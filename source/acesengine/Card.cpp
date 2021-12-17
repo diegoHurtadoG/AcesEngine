@@ -4,15 +4,11 @@
 
 namespace acesengine {
 
-    class Card : public Draggable {
-        sf::Texture BackTexture;
-
-    public:
-        Card(float x = 16.0f, float y = 22.0f,
-            std::string BackTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
-            std::string FrontTexturePath = getPath("assets/imgs/8BitDeckAssets.png").string(),
-            int firstPointAssetXBACK = 1, int firstPointAssetYBACK = 1, int secondPointAssetXBACK = 32, int secondPointAssetYBACK = 44,
-            int firstPointAssetXFRONT = 36, int firstPointAssetYFRONT = 1, int secondPointAssetXFRONT = 32, int secondPointAssetYFRONT = 44)
+    Card::Card(float x, float y,
+            std::string BackTexturePath,
+            std::string FrontTexturePath,
+            int firstPointAssetXBACK, int firstPointAssetYBACK, int secondPointAssetXBACK, int secondPointAssetYBACK,
+            int firstPointAssetXFRONT, int firstPointAssetYFRONT, int secondPointAssetXFRONT, int secondPointAssetYFRONT)
             : Draggable(x, y, FrontTexturePath, firstPointAssetXFRONT, firstPointAssetYFRONT, secondPointAssetXFRONT, secondPointAssetYFRONT)
         {
             if (!this->BackTexture.loadFromFile(BackTexturePath, sf::IntRect(firstPointAssetXBACK, firstPointAssetYBACK, secondPointAssetXBACK, secondPointAssetYBACK)))
@@ -21,19 +17,16 @@ namespace acesengine {
             }
         }
 
-    protected:
-        void setBackTexture(sf::Texture texture) {
-            this->BackTexture = texture;
-        }
+    void Card::setBackTexture(sf::Texture texture) {
+        this->BackTexture = texture;
+    }
 
-        sf::Texture getBackTexture() {
-            return this->BackTexture;
-        }
+    sf::Texture Card::getBackTexture() {
+        return this->BackTexture;
+    }
 
-    public:
-
-        void turn() {
-            this->sprite.getTexture() == &this->texture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->texture);
-        }
-    };
+    void Card::turn() {
+        this->sprite.getTexture() == &this->texture ? this->sprite.setTexture(this->BackTexture) : this->sprite.setTexture(this->texture);
+    }
+    
 };

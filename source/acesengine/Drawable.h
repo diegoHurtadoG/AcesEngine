@@ -8,8 +8,9 @@
 #include <stdlib.h>
 #include "AcesWindow.h"
 
-
+class AcesWindow;
 namespace acesengine {
+
     /// Base class to an object with a draw() method
     /**
     *   Every drawable object will inherit from this class. This will have a sprite, and a texture, the sprite contains the position

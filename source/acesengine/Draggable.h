@@ -9,6 +9,8 @@
 #include "Drawable.h"
 #include "AcesWindow.h"
 
+class Drawable;
+class AcesWindow;
 
 namespace acesengine {
     /// Base class to an object that can be dragged in the screen
@@ -30,8 +32,7 @@ namespace acesengine {
         */
         Draggable(float x, float y,
             std::string texturePath,
-            int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY)
-            : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY);
+            int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY);
 
     public:
         /// Enables the drag and drop of the current object
@@ -40,4 +41,4 @@ namespace acesengine {
         */
         void enableDrag(AcesWindow& acesWindow);
     };
-};
+}

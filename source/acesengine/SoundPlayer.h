@@ -9,6 +9,7 @@
 
 
 namespace acesengine {
+
     /// Defines a sound player to well... play sounds
     /**
     * One sound player can contain multiple sounds and store them with a string unique key
@@ -162,7 +163,7 @@ namespace acesengine {
         * @param uniqueName string to identify the music
         * @param value float representing the offset measured in seconds
         */
-        float setPlayingOffsetMusic(std::string uniqueName, float offset);
+        void setPlayingOffsetMusic(std::string uniqueName, float offset);
 
         /// Set if the music buffer is meant to loop
         /**

@@ -1,13 +1,8 @@
 #include "Drawable.h"
 
 namespace acesengine {
-    class Drawable {
-    protected:
-        sf::Sprite sprite;
-        sf::Texture texture;
 
-    public:
-        Drawable(float x, float y,
+    Drawable::Drawable(float x, float y,
             std::string texturePath,
             int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY)
         {
@@ -28,35 +23,31 @@ namespace acesengine {
             this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
         }
 
-    protected:
-        void setTexture(sf::Texture texture) {
-            this->texture = texture;
-        }
+    void Drawable::setTexture(sf::Texture texture) {
+        this->texture = texture;
+    }
 
-        sf::Texture getTexture() {
-            return this->texture;
-        }
+    sf::Texture Drawable::getTexture() {
+        return this->texture;
+    }
 
-    public:
+    void Drawable::draw(AcesWindow& acesWindow) {
+        acesWindow.getWindow().draw(this->sprite);
+    }
 
-        void draw(AcesWindow& acesWindow) {
-            acesWindow.getWindow().draw(this->sprite);
-        }
+    void Drawable::setPosition(float x, float y) {
+        this->sprite.setPosition(sf::Vector2f(x, y));
+    }
 
-        void setPosition(float x, float y) {
-            this->sprite.setPosition(sf::Vector2f(x, y));
-        }
+    sf::Vector2f Drawable::getPosition() {
+        return this->sprite.getPosition();
+    }
 
-        sf::Vector2f getPosition() {
-            return this->sprite.getPosition();
-        }
+    void Drawable::setSprite(sf::Sprite sprite) {
+        this->sprite = sprite;
+    }
 
-        void setSprite(sf::Sprite sprite) {
-            this->sprite = sprite;
-        }
-
-        sf::Sprite getSprite() {
-            return this->sprite;
-        }
-    };
+    sf::Sprite Drawable::getSprite() {
+        return this->sprite;
+    }
 };

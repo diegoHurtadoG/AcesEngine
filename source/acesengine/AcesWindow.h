@@ -6,8 +6,12 @@
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
+#include "root_directory.h"
 #include "Draggable.h"
 #include "Inputable.h"
+
+class Draggable;
+class Inputable;
 
 namespace acesengine {
 
@@ -104,4 +108,4 @@ namespace acesengine {
         */
         void enableInputables(std::vector<Inputable*> inputable_vector);
     };
-};
+}

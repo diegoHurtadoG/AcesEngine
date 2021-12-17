@@ -9,6 +9,8 @@
 #include "Drawable.h"
 #include "AcesWindow.h"
 
+class Drawable;
+class AcesWindow;
 
 namespace acesengine {
     /// Base class to an object that has input, keys must be defined in specific class
@@ -16,6 +18,7 @@ namespace acesengine {
     *   This class already expands the drawable class, overrides the draw() method to enable input
     */
     class Inputable : public Drawable {
+
     protected:
         /// <summary>
         /// Defines the key to the left movement
@@ -55,8 +58,7 @@ namespace acesengine {
         */
         Inputable(float x, float y,
             std::string texturePath,
-            int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY)
-            : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY);
+            int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY);
 
     public:
         /// Input receiver and movement maker, define sequences and chords
@@ -72,4 +74,5 @@ namespace acesengine {
         */
         void draw(AcesWindow& acesWindow, bool move = true);
     };
-};
+
+}
