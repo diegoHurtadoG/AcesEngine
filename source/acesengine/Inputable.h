@@ -12,7 +12,6 @@
 class Drawable;
 class AcesWindow;
 
-
 namespace acesengine {
     /// Base class to an object that has input, keys must be defined in specific class
     /**

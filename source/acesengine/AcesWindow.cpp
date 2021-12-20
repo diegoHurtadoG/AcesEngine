@@ -1,6 +1,12 @@
 #include "AcesWindow.h"
 #include "root_directory.h"
+#include "Drawable.h"
+#include "Draggable.h"
+#include "Inputable.h"
 
+class Drawable;
+class Draggable;
+class Inputable;
 
 namespace acesengine {
 
