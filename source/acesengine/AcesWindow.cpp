@@ -59,18 +59,4 @@ namespace acesengine {
     void AcesWindow::display() {
         this->window.display();
     }
-
-    void AcesWindow::enableDraggables(std::vector<Draggable*> drag_vector) {
-        for (auto i = drag_vector.begin(); i != drag_vector.end(); i++) {
-            (**i).draw(*this);
-            (**i).enableDrag(*this);
-        }
-    }
-
-    void AcesWindow::enableInputables(std::vector<Inputable*> inputable_vector) {
-        for (auto i = inputable_vector.begin(); i != inputable_vector.end(); i++) {
-            (**i).draw(*this);
-        }
-    }
-    
 };

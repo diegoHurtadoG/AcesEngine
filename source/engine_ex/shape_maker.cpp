@@ -12,6 +12,7 @@
 #include <acesengine/SoundPlayer.h>
 #include <acesengine/TextWriter.h>
 #include <acesengine/root_directory.h>
+#include <acesengine/acesengine.h>
 
 /*
     This file will be defining common art used in board games
@@ -99,8 +100,8 @@ int main() {
         }
 
         AcesWindow.update();
-        AcesWindow.enableDraggables(draggable_array);
-        AcesWindow.enableInputables(inputable_array);
+        ae::enableDraggables(draggable_array, AcesWindow);
+        ae::enableInputables(inputable_array, AcesWindow);
         AcesWindow.display();
 
     }

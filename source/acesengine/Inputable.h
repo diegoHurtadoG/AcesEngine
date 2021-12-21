@@ -13,7 +13,7 @@ class AcesWindow;
 namespace acesengine {
     /// Base class to an object that has input, keys must be defined in specific class
     /**
-    *   This class already expands the drawable class, overrides the draw() method to enable input
+    *   Includes a draw method and already includes the sprite and texture
     */
     class Inputable {
     protected:

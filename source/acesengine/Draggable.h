@@ -13,7 +13,7 @@ class AcesWindow;
 namespace acesengine {
     /// Base class to an object that can be dragged in the screen
     /**
-    *   This class already expands the drawable class (an object can not be dragged but not drawn)
+    *   Includes a draw method and already includes the sprite and texture
     */
     class Draggable {
     protected:

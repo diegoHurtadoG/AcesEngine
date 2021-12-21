@@ -7,8 +7,6 @@
 #include <iostream>
 #include <stdlib.h>
 #include "root_directory.h"
-#include "Draggable.h"
-#include "Inputable.h"
 
 // This class uses Inputable and Draggable
 
@@ -94,20 +92,5 @@ namespace acesengine {
         * Display the new window
         */
         void display();
-
-        /// Enables the drag and drop of objects in the array and draw them
-        /**
-        * @param drag_vector std::vector<Draggable*> used to define which objects are movables, accept every object that uses the Draggable class
-        * @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
-        */
-        void enableDraggables(std::vector<Draggable*> drag_vector);
-
-
-        /// Enable the input of objects in the array and draw them
-        /**
-        * @param inputable_vector std::vector<Inputable*> Used to draw and enable input of every Inputable object in the array
-        * @param acesWindow AcesWindow& reference to the window in which the cards will be drawn
-        */
-        void enableInputables(std::vector<Inputable*> inputable_vector);
     };
 }
