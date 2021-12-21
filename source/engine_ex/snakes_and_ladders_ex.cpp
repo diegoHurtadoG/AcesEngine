@@ -50,6 +50,7 @@ int main() {
     // Credits:
     printf("Music: 'Fragments', from PlayOnLoop.com\nLicensed under Creative Commons by Attribution 4.0\n");
     acesSoundPlayer.playAudio("music");
+    acesSoundPlayer.setVolumeAudio("music", 50);
     bool playing = true;
 
     // run the program as long as the window is open
@@ -84,6 +85,18 @@ int main() {
                         acesSoundPlayer.playAudio("music");
                         playing = !playing;
                     }
+                }
+                else if (event.key.code == sf::Keyboard::Key::Num1) {
+                    acesSoundPlayer.setVolumeAudio("music", acesSoundPlayer.getVolumeAudio("music") - 10);;
+                }
+                else if (event.key.code == sf::Keyboard::Key::Num2) {
+                    acesSoundPlayer.setVolumeAudio("music", acesSoundPlayer.getVolumeAudio("music") + 10);
+                }
+                else if (event.key.code == sf::Keyboard::Key::Num3) {
+                    acesSoundPlayer.setPitchAudio("music", acesSoundPlayer.getPitchAudio("music") + 0.1f);
+                }
+                else if (event.key.code == sf::Keyboard::Key::Num4) {
+                    acesSoundPlayer.setPitchAudio("music", acesSoundPlayer.getPitchAudio("music") - 0.1f);
                 }
             }
         }
