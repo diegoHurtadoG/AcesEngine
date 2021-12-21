@@ -38,10 +38,19 @@ int main() {
     ae::SoundPlayer acesSoundPlayer;
     acesSoundPlayer.loadAudio("go", ae::getPath("assets/audios/VoiceOverPack/Female/go.ogg").string());
 
+    // Background Music
+    acesSoundPlayer.loadAudio("music", ae::getPath("assets/audios/BackgroundMusic/POL-fragments-short.wav").string());
+    acesSoundPlayer.loopAudio("music");
+
 
     // Making the board for the game
     ae::Drawable board((float)AcesWindow.getSize().x / 2, (float)AcesWindow.getSize().y / 2,
         ae::getPath("assets/imgs/snakes_and_ladders_board.png").string(), 0, 0, 492, 492);
+
+    // Credits:
+    printf("Music: 'Fragments', from PlayOnLoop.com\nLicensed under Creative Commons by Attribution 4.0\n");
+    acesSoundPlayer.playAudio("music");
+    bool playing = true;
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
@@ -65,6 +74,16 @@ int main() {
                 }
                 else if (event.key.code == sf::Keyboard::Key::R) {
                     printf("The rolled number is: %i\n", rand() % 6 + 1);
+                }
+                else if (event.key.code == sf::Keyboard::Key::M) {
+                    if (playing){
+                        acesSoundPlayer.stopAudio("music");
+                        playing = !playing;
+                    }
+                    else {
+                        acesSoundPlayer.playAudio("music");
+                        playing = !playing;
+                    }
                 }
             }
         }
