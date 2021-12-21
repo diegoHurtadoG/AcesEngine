@@ -43,6 +43,14 @@ The example can be found in
 ```
 build/source/engine/Release/shape_maker.exe
 ```
+And on the same directory you can found the Snakes And Ladders game. In this game, you can:
+```
+1 - 4: Music Volume and Pitch
+M: Stop and resume music
+R: Roll Dice
+C: 'Go' voice
+WASD and Arrows: Players input
+```
 ---
 ### Ignore the file content and go down until you find the last while lopp
 There you can see how the example was made. The events are still written in SFML library language.
@@ -53,7 +61,7 @@ To Make your own game, make a new file in the same engine/ directory and import 
 # Documentation
 The official documentation is made in [Doxygen](https://www.doxygen.nl/index.html) and can be found in the docs/ directory, to open it correctly open
 ```
-docs/html/index.html
+docs/index.html
 ```
 with your favorite browser and then you can navigate.
 
@@ -80,35 +88,35 @@ void enableInputables(std::vector<Inputable*> inputable_vector, AcesWindow& aces
 ```
 
 ---
-###**TODO**:
--	Clean unused third party libraries
-
----
-Use Example:
+Use Example (shape_maker.cpp):
 ```
 int main() {
-    std::vector<Draggable*> draggable_array;
-    std::vector<Inputable*> inputable_array;
+    namespace ae = acesengine;
 
-    AcesWindow AcesWindow(800, 600, "Ventana");
+    std::vector<ae::Draggable*> draggable_array;
+    std::vector<ae::Inputable*> inputable_array;
+
+    ae::AcesWindow AcesWindow(800, 600, "Ventana");
     sf::RenderWindow& window = AcesWindow.getWindow();
 
     // Testing Card class
-    Card card_test;
+    ae::Card card_test;
     draggable_array.push_back(&card_test); // TODO: Automatizar (si se puede de forma facil y sin restringir todo a solo cartas y dados)
 
     // Testing Player class
-    Player player1;
-    Player player2(0.0f, 0.0f, Grafica::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
+    ae::Player player1;
+    ae::Player player2(0.0f, 0.0f, ae::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
+
+    // Change this to draggable_array
     inputable_array.push_back(&player1);
     inputable_array.push_back(&player2);
 
     // Testing SoundPlayer class
-    SoundPlayer acesSoundPlayer;
-    acesSoundPlayer.loadAudio("congratulations", Grafica::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
+    ae::SoundPlayer acesSoundPlayer;
+    acesSoundPlayer.loadAudio("congratulations", ae::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
     acesSoundPlayer.playAudio("congratulations");
 
-    acesSoundPlayer.loadAudio("correct", Grafica::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
+    acesSoundPlayer.loadAudio("correct", ae::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
 
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
@@ -146,8 +154,8 @@ int main() {
         }
 
         AcesWindow.update();
-        enableDraggables(draggable_array, AcesWindow);
-        enableInputables(inputable_array, AcesWindow);
+        ae::enableDraggables(draggable_array, AcesWindow);
+        ae::enableInputables(inputable_array, AcesWindow);
         AcesWindow.display();
 
     }
