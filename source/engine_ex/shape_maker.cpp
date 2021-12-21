@@ -54,6 +54,8 @@ int main() {
     // Testing Player class
     ae::Player player1;
     ae::Player player2(0.0f, 0.0f, ae::getPath("assets/imgs/dice and pieces/piece1.png").string(), 0, 0, 0, 0, 2);
+
+    // Change this to draggable_array
     inputable_array.push_back(&player1);
     inputable_array.push_back(&player2);
 

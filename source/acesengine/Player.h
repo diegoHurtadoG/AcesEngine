@@ -60,7 +60,7 @@ namespace acesengine {
         /**
         * @param playerNumber int depending on the player number set default controls
         */
-        void remapInput(int playerNumber);
+        void remapInput(int playerNumber); // HERE
     };
 
 };

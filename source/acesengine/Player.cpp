@@ -7,20 +7,21 @@ namespace acesengine {
             std::string texturePath,
             int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY,
             int playerNumber) : Inputable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
-        {
+        {                       // HERE
             this->playerNumber = playerNumber;
-            this->remapInput(this->playerNumber);
+            this->remapInput(this->playerNumber); // HERE
         }
 
     void Player::setPlayerNumber(int playerNumber) {
         this->playerNumber = playerNumber % 2;
-        this->remapInput(playerNumber);
+        this->remapInput(playerNumber); // HERE
     }
 
     int Player::getPlayerNumber() {
         return this->playerNumber;
     }
 
+    // HERE
     void Player::remapInput(int playerNumber) {
         if (playerNumber == 1) {
             this->left = sf::Keyboard::Key::A;
@@ -35,5 +36,5 @@ namespace acesengine {
             this->down = sf::Keyboard::Key::Down;
         }
     }
-
+    
 };

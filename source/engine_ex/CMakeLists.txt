@@ -8,3 +8,4 @@ function(MakeExample TARGETNAME FILENAME)
 endfunction(MakeExample)
 
 MakeExample(shape_maker shape_maker.cpp)
+MakeExample(snakes_and_ladders_ex snakes_and_ladders_ex.cpp)
