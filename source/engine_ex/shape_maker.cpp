@@ -3,15 +3,15 @@
 #include <iostream>
 #include <stdlib.h>
 #include <acesengine/root_directory.h>
-#include <acesengine/acesengine.h>
 #include <acesengine/AcesWindow.h>
-#include <acesengine/Card.h>
-#include <acesengine/Draggable.h>
 #include <acesengine/Drawable.h>
+#include <acesengine/Draggable.h>
 #include <acesengine/Inputable.h>
 #include <acesengine/Player.h>
+#include <acesengine/Card.h>
 #include <acesengine/SoundPlayer.h>
 #include <acesengine/TextWriter.h>
+#include <acesengine/root_directory.h>
 
 /*
     This file will be defining common art used in board games

@@ -1,15 +1,29 @@
 #include "Inputable.h"
-#include "Drawable.h"
 
 class Drawable;
+class AcesWindow;
 
 namespace acesengine {
 
     Inputable::Inputable(float x, float y,
             std::string texturePath,
             int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY)
-            : Drawable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
         {
+            if ((firstPointAssetX != secondPointAssetX) && (firstPointAssetY != secondPointAssetY)) {
+                if (!this->texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
+                {
+                    printf("Error loading Back texture");
+                }
+            }
+            else {
+                if (!this->texture.loadFromFile(texturePath))
+                {
+                    printf("Error loading Back texture");
+                }
+            }
+            this->sprite.setTexture(this->texture);
+            this->sprite.setPosition(sf::Vector2f(x, y));
+            this->sprite.setOrigin(this->sprite.getTexture()->getSize().x / 2, this->sprite.getTexture()->getSize().y / 2);
             this->left = sf::Keyboard::Key::A;
             this->right = sf::Keyboard::Key::D;
             this->up = sf::Keyboard::Key::W;
@@ -63,5 +77,29 @@ namespace acesengine {
             this->receiveInput();
         }
     }
-    
+
+    void Inputable::setTexture(sf::Texture texture) {
+        this->texture = texture;
+    }
+
+    sf::Texture Inputable::getTexture() {
+        return this->texture;
+    }
+
+    void Inputable::setPosition(float x, float y) {
+        this->sprite.setPosition(sf::Vector2f(x, y));
+    }
+
+    sf::Vector2f Inputable::getPosition() {
+        return this->sprite.getPosition();
+    }
+
+    void Inputable::setSprite(sf::Sprite sprite) {
+        this->sprite = sprite;
+    }
+
+    sf::Sprite Inputable::getSprite() {
+        return this->sprite;
+    }
+
 };

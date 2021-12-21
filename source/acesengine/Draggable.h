@@ -6,10 +6,8 @@
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
-#include "Drawable.h"
 #include "AcesWindow.h"
 
-class Drawable;
 class AcesWindow;
 
 namespace acesengine {
@@ -17,7 +15,17 @@ namespace acesengine {
     /**
     *   This class already expands the drawable class (an object can not be dragged but not drawn)
     */
-    class Draggable : public Drawable {
+    class Draggable {
+    protected:
+        /// <summary>
+        /// Sets the sprite to draw
+        /// </summary>
+        sf::Sprite sprite;
+
+        /// <summary>
+        /// Sets a texture to put on the sprite
+        /// </summary>
+        sf::Texture texture;
 
     public:
         /// Constructor
@@ -34,7 +42,51 @@ namespace acesengine {
             std::string texturePath,
             int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY);
 
+    protected:
+        /// Texture setter
+        /**
+        * @param texture sf::Texture defines texture of player
+        */
+        void setTexture(sf::Texture texture);
+
+        /// Texture getter
+        /**
+        * @returns sf::Texture obtains current texture
+        */
+        sf::Texture getTexture();
+
     public:
+        /// Draw function
+        /**
+        * @param &renderWindow receives a reference to the window to draw
+        */
+        void draw(AcesWindow& acesWindow);
+
+        /// Position setter
+        /**
+        * @param x float defines x coordinate
+        * @param y float defines y coordinate
+        */
+        void setPosition(float x, float y);
+
+        /// Position getter
+        /**
+        * @returns sf::Vector2f defines position
+        */
+        sf::Vector2f getPosition();
+
+        /// Sprite setter
+        /**
+        * @param sprite sf::Sprite defines player Sprite
+        */
+        void setSprite(sf::Sprite sprite);
+
+        /// Sprite getter
+        /**
+        * @returns sf::Sprite actual player sprite
+        */
+        sf::Sprite getSprite();
+
         /// Enables the drag and drop of the current object
         /**
         * @param &window sf::RenderWindow reference to the window in which the cards will be drawn

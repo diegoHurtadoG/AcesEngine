@@ -6,10 +6,8 @@
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
-#include "Drawable.h"
 #include "AcesWindow.h"
 
-class Drawable;
 class AcesWindow;
 
 namespace acesengine {
@@ -17,9 +15,18 @@ namespace acesengine {
     /**
     *   This class already expands the drawable class, overrides the draw() method to enable input
     */
-    class Inputable : public Drawable {
-
+    class Inputable {
     protected:
+        /// <summary>
+        /// Sets the sprite to draw
+        /// </summary>
+        sf::Sprite sprite;
+
+        /// <summary>
+        /// Sets a texture to put on the sprite
+        /// </summary>
+        sf::Texture texture;
+
         /// <summary>
         /// Defines the key to the left movement
         /// </summary>
@@ -60,7 +67,46 @@ namespace acesengine {
             std::string texturePath,
             int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY);
 
+    protected:
+        /// Texture setter
+        /**
+        * @param texture sf::Texture defines texture of player
+        */
+        void setTexture(sf::Texture texture);
+
+        /// Texture getter
+        /**
+        * @returns sf::Texture obtains current texture
+        */
+        sf::Texture getTexture();
+
     public:
+
+        /// Position setter
+        /**
+        * @param x float defines x coordinate
+        * @param y float defines y coordinate
+        */
+        void setPosition(float x, float y);
+
+        /// Position getter
+        /**
+        * @returns sf::Vector2f defines position
+        */
+        sf::Vector2f getPosition();
+
+        /// Sprite setter
+        /**
+        * @param sprite sf::Sprite defines player Sprite
+        */
+        void setSprite(sf::Sprite sprite);
+
+        /// Sprite getter
+        /**
+        * @returns sf::Sprite actual player sprite
+        */
+        sf::Sprite getSprite();
+
         /// Input receiver and movement maker, define sequences and chords
         /**
         * Enables input in players

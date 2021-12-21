@@ -6,9 +6,10 @@
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
-#include "Inputable.h"
 #include "root_directory.h"
+#include "Inputable.h"
 
+// Uses Inputable to extend
 
 namespace acesengine {
 

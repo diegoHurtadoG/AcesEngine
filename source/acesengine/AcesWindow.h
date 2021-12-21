@@ -7,9 +7,11 @@
 #include <iostream>
 #include <stdlib.h>
 #include "root_directory.h"
+#include "Draggable.h"
+#include "Inputable.h"
 
+// This class uses Inputable and Draggable
 
-class Drawable;
 class Draggable;
 class Inputable;
 

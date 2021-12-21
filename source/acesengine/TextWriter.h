@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "AcesWindow.h"
 
+// Uses AcesWindow to draw
 
 namespace acesengine {
 

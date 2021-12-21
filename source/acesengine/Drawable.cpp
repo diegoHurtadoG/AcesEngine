@@ -1,5 +1,7 @@
 #include "Drawable.h"
 
+class AcesWindow;
+
 namespace acesengine {
 
     Drawable::Drawable(float x, float y,

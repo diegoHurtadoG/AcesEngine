@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "AcesWindow.h"
 
+// This class uses AcesWindow
+
 class AcesWindow;
 
 namespace acesengine {
