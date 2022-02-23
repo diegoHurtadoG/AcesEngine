@@ -48,5 +48,11 @@ namespace acesengine {
         * @param secondPointAssetY an int argument, represent the second coordinate y of the front asset (if a tileset)
         */
         sf::Texture makeTexture(std::string texturePath, int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0);
+
+        /// Getter to an animation, returns a vector of textures
+        /**
+        * @param key std::string and string argument that represents the key to the map of animations
+        */
+        std::vector<sf::Texture> getAnimation(std::string key);
     };
 };

@@ -19,16 +19,21 @@ namespace acesengine {
         if ((firstPointAssetX != secondPointAssetX) && (firstPointAssetY != secondPointAssetY)) {
             if (texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
             {
-                printf("Error loading Back texture");
+                printf("Animation: Error loading Back texture rectangle\n");
             }
         }
         else {
             if (texture.loadFromFile(texturePath))
             {
-                printf("Error loading Back texture");
+                printf("Animation: Error loading Back texture\n");
             }
         }
         return texture;
+    }
+
+    std::vector<sf::Texture> Animation::getAnimation(std::string key)
+    {
+        return this->animations.at(key);
     }
 
     

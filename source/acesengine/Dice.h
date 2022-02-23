@@ -6,6 +6,8 @@
 #include <vector>
 #include <iostream>
 #include <stdlib.h>
+#include <chrono>
+#include <thread>
 #include "root_directory.h"
 #include "Animation.h"
 #include "Drawable.h"
@@ -34,7 +36,7 @@ namespace acesengine {
         * @param secondPointAssetX int Defines the second x coordinate of the asset in case of using a tileset
         * @param secondPointAssetY int Defines the second y coordinate of the asset in case of using a tileset
         */
-        Dice(float x = 0.0f, float y = 0.0f,
+        Dice(float x = 100.0f, float y = 100.0f,
             std::string texturePath = getPath("assets/imgs/dice and pieces/die rolled 1.png").string(),
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0);
 

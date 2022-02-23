@@ -12,13 +12,13 @@ namespace acesengine {
             if ((firstPointAssetX != secondPointAssetX) && (firstPointAssetY != secondPointAssetY)) {
                 if (!this->texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
                 {
-                    printf("Error loading Back texture");
+                    printf("Inputable: Error loading Back texture rectangle\n");
                 }
             }
             else {
                 if (!this->texture.loadFromFile(texturePath))
                 {
-                    printf("Error loading Back texture");
+                    printf("Inputable: Error loading Back texture");
                 }
             }
             this->sprite.setTexture(this->texture);

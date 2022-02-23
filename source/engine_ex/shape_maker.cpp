@@ -13,6 +13,7 @@
 #include <acesengine/TextWriter.h>
 #include <acesengine/root_directory.h>
 #include <acesengine/acesengine.h>
+#include <acesengine/Dice.h>
 
 /*
     This file will be defining common art used in board games
@@ -66,6 +67,9 @@ int main() {
 
     acesSoundPlayer.loadAudio("correct", ae::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
 
+    // Testing the Dice class (and the Animation inside it)
+    ae::Dice dice;
+
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
     while (window.isOpen())
@@ -83,7 +87,7 @@ int main() {
                 printf("The window has been resized, width: %i, height: %i\n", event.size.width, event.size.height);
                 break;
             case sf::Event::KeyReleased:
-                if (event.key.code == sf::Keyboard::Key::R && false) { // TODO: Fix recording, fails due to memory error
+                if (event.key.code == sf::Keyboard::Key::F && false) { // TODO: Fix recording, fails due to memory error
                     printf("began recording\n");
                     if (acesSoundPlayer.getRecordingState()) {
                         std::string recording_name = "Grabacion_test";
@@ -97,6 +101,9 @@ int main() {
                 }
                 else if (event.key.code == sf::Keyboard::Key::C) {
                     acesSoundPlayer.playAudio("correct");
+                }
+                else if (event.key.code == sf::Keyboard::Key::R) {
+                    dice.roll();
                 }
             }
         }
