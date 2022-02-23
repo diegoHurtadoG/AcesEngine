@@ -103,7 +103,8 @@ int main() {
                     acesSoundPlayer.playAudio("correct");
                 }
                 else if (event.key.code == sf::Keyboard::Key::R) {
-                    dice.roll();
+                    int value = dice.roll();
+                    printf("Dice has been rolled, value: %i\n", value);
                 }
             }
         }

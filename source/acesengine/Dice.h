@@ -38,14 +38,14 @@ namespace acesengine {
         */
         Dice(float x = 100.0f, float y = 100.0f,
             std::string texturePath = getPath("assets/imgs/dice and pieces/die rolled 1.png").string(),
-            int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0);
+            int firstPointAssetX = 7, int firstPointAssetY = 7, int secondPointAssetX = 23, int secondPointAssetY = 22);
 
     public:
         /// Method to roll the dice, making the animation of roll
         /**
         * 
         */
-        void roll();
+        int roll();
     };
 
 };
