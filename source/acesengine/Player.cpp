@@ -22,6 +22,7 @@ namespace acesengine {
     }
 
     // HERE
+
     void Player::remapInput(int playerNumber) {
         if (playerNumber == 1) {
             this->left = sf::Keyboard::Key::A;

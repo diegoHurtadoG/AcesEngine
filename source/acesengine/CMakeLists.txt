@@ -7,6 +7,8 @@ set(ACESENGINE_HEADERS
 	Player.h
 	SoundPlayer.h
 	TextWriter.h
+	Animation.h
+	Dice.h
  )
 
 set(ACESENGINE_SOURCES
@@ -18,6 +20,8 @@ set(ACESENGINE_SOURCES
 	Player.cpp
 	SoundPlayer.cpp
 	TextWriter.cpp
+	Animation.cpp
+	Dice.cpp
  )
 
 add_library(acesengine STATIC ${ACESENGINE_SOURCES} ${ACESENGINE_HEADERS} acesengine.h root_directory.h)
