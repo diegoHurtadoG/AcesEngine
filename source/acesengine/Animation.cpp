@@ -10,6 +10,9 @@ namespace acesengine {
 
     void Animation::addAnimation(std::string key, std::vector<sf::Texture> textures)
     {
+        // Error here, the insert copies the value into the vector, and textures can not be copied
+        // https://en.sfml-dev.org/forums/index.php?topic=11627.0
+        // Pointers may be neccesary
         animations.insert({ key, textures });
     }
 
@@ -17,13 +20,13 @@ namespace acesengine {
     {
         sf::Texture texture;
         if ((firstPointAssetX != secondPointAssetX) && (firstPointAssetY != secondPointAssetY)) {
-            if (texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
+            if (!texture.loadFromFile(texturePath, sf::IntRect(firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)))
             {
                 printf("Animation: Error loading Back texture rectangle\n");
             }
         }
         else {
-            if (texture.loadFromFile(texturePath))
+            if (!texture.loadFromFile(texturePath))
             {
                 printf("Animation: Error loading Back texture\n");
             }

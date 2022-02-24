@@ -63,7 +63,7 @@ int main() {
     // Testing SoundPlayer class
     ae::SoundPlayer acesSoundPlayer;
     acesSoundPlayer.loadAudio("congratulations", ae::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
-    acesSoundPlayer.playAudio("congratulations");
+    //acesSoundPlayer.playAudio("congratulations");
 
     acesSoundPlayer.loadAudio("correct", ae::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
 
@@ -110,6 +110,7 @@ int main() {
         }
 
         AcesWindow.update();
+        dice.draw(AcesWindow);
         ae::enableDraggables(draggable_array, AcesWindow);
         ae::enableInputables(inputable_array, AcesWindow);
         AcesWindow.display();
