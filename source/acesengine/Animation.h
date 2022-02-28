@@ -25,7 +25,7 @@ namespace acesengine {
         /// <summary>
         /// Sets a texture to put on the sprite
         /// </summary>
-        std::map<std::string, std::vector<std::string>> animations; // If the white square remains, the vector can be of paths instead of textures.
+        std::map<std::string, std::vector<sf::Texture*>> animations; // If the white square remains, the vector can be of paths instead of textures.
 
     public:
         /// Constructor
@@ -37,7 +37,7 @@ namespace acesengine {
         * @param key std::string sets the key to add to the map
         * @param textures std::vector<sf::Texture> Vector of the assets that will make the animation
         */
-        void addAnimation(std::string key, std::vector<std::string> textures);
+        void addAnimation(std::string key, std::vector<sf::Texture*> textures);
 
         /// Function to make a texture object (to use in the add Animation)
         /**
@@ -53,6 +53,6 @@ namespace acesengine {
         /**
         * @param key std::string and string argument that represents the key to the map of animations
         */
-        std::vector<std::string> getAnimation(std::string key);
+        std::vector<sf::Texture*> getAnimation(std::string key);
     };
 };
