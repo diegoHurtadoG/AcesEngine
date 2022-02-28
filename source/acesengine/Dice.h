@@ -41,11 +41,11 @@ namespace acesengine {
             int firstPointAssetX = 0, int firstPointAssetY = 0, int secondPointAssetX = 0, int secondPointAssetY = 0);
 
     public:
-        /// Method to roll the dice, making the animation of roll
+        /// Method to roll the dice once, used in the roll method
         /**
         * @returns int the value of the dice post roll.
         */
-        int roll();
+        int roll(int time);
     };
 
 };

@@ -103,7 +103,15 @@ int main() {
                     acesSoundPlayer.playAudio("correct");
                 }
                 else if (event.key.code == sf::Keyboard::Key::R) {
-                    int value = dice.roll();
+                    int value;
+                    int time = (rand() % 200 + 100);
+                    do {
+                        value = dice.roll(time);
+                        printf("Rolling.\n");
+                        dice.draw(AcesWindow);
+                        AcesWindow.display();
+                        time = time - 20;
+                    } while (time > 50);
                     printf("Dice has been rolled, value: %i\n", value);
                 }
             }

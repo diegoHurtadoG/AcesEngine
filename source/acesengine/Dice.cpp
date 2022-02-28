@@ -17,16 +17,12 @@ namespace acesengine {
         this->addAnimation("6", { this->makeTexture(getPath("assets/imgs/dice and pieces/die rolled 6.png").string(), 7, 7, 23, 22) });
     }
 
-    int Dice::roll()
+    int Dice::roll(int time)
     {
-        int rollTimes = rand() % 4 + 4;
         int actualValue = rand() % 6 + 1;
         sf::Texture* texture = new sf::Texture();
-        for (int i = 0; i < rollTimes; i++) {
-            actualValue = rand() % 6 + 1;
-            this->sprite.setTexture(*this->getAnimation(std::to_string(actualValue))[0]);
-            std::this_thread::sleep_for(std::chrono::milliseconds(200));
-        }
+        this->sprite.setTexture(*this->getAnimation(std::to_string(actualValue))[0]);
+        std::this_thread::sleep_for(std::chrono::milliseconds(7000 / time));
 
         return actualValue;
     }
