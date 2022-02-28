@@ -35,7 +35,7 @@ namespace acesengine {
         /// Function to add an animation to the map
         /**
         * @param key std::string sets the key to add to the map
-        * @param textures std::vector<sf::Texture> Vector of the assets that will make the animation
+        * @param textures std::vector<sf::Texture*> Vector of the assets that will make the animation
         */
         void addAnimation(std::string key, std::vector<sf::Texture*> textures);
 
