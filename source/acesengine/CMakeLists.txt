@@ -9,6 +9,7 @@ set(ACESENGINE_HEADERS
 	TextWriter.h
 	Animation.h
 	Dice.h
+	ProfilerFPS.h
  )
 
 set(ACESENGINE_SOURCES
@@ -22,6 +23,7 @@ set(ACESENGINE_SOURCES
 	TextWriter.cpp
 	Animation.cpp
 	Dice.cpp
+	ProfilerFPS.cpp
  )
 
 add_library(acesengine STATIC ${ACESENGINE_SOURCES} ${ACESENGINE_HEADERS} acesengine.h root_directory.h)

@@ -14,6 +14,7 @@
 #include <acesengine/root_directory.h>
 #include <acesengine/acesengine.h>
 #include <acesengine/Dice.h>
+#include <acesengine/ProfilerFPS.h>
 
 /*
     This file will be defining common art used in board games
@@ -70,6 +71,9 @@ int main() {
     // Testing the Dice class (and the Animation inside it)
     ae::Dice dice;
 
+    // Testing the ProfilerFPS class
+    ae::ProfilerFPS profilerfps;
+
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
     while (window.isOpen())
@@ -122,6 +126,11 @@ int main() {
         ae::enableDraggables(draggable_array, AcesWindow);
         ae::enableInputables(inputable_array, AcesWindow);
         AcesWindow.display();
+
+        profilerfps.update();
+        int ss = profilerfps.getFPS();
+
+        printf("FPS: %i\n", ss);
 
     }
     return 0;
