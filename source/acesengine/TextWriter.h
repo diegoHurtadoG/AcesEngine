@@ -21,7 +21,7 @@ namespace acesengine {
         /// <summary>
         /// Defines the text that will be displayed
         /// </summary>
-        sf::Text text;
+        sf::Text* text;
 
     public:
         /// Constructor, preloads the available options to fast and easy use

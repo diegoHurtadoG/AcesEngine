@@ -75,8 +75,7 @@ int main() {
     ae::ProfilerFPS profilerfps;
 
     // run the program as long as the window is open
-    // TODO: abstract while loop to use AcesWindow instead of window
-    while (window.isOpen())
+    while (AcesWindow.getWindow().isOpen())
     {
 
         // check all the window's events that were triggered since the last iteration of the loop
