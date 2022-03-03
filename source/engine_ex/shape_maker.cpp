@@ -125,17 +125,15 @@ int main() {
 
         AcesWindow.update();
 
-        textWriter.draw(AcesWindow);
-
         dice.draw(AcesWindow);
         ae::enableDraggables(draggable_array, AcesWindow);
         ae::enableInputables(inputable_array, AcesWindow);
-        AcesWindow.display();
 
         profilerfps.update();
-        int ss = profilerfps.getFPS();
+        textWriter.setString("FPS: " + std::to_string(profilerfps.getFPS()));
+        textWriter.draw(AcesWindow);
 
-        printf("FPS: %i\n", ss);
+        AcesWindow.display();
 
     }
     return 0;
