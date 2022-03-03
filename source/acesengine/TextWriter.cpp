@@ -4,20 +4,20 @@
 namespace acesengine {
 
     TextWriter::TextWriter() {
-            sf::Font* font;
-            if (!font->loadFromFile(getPath("assets/fonts/Akronim-Regular.ttf").string()))
+        sf::Font* font = new sf::Font();
+        if (!font->loadFromFile(getPath("assets/fonts/Akronim-Regular.ttf").string()))
             {
                 printf("Error loading font");
             }
-            this->text->setFont(*font);
-            this->text->setCharacterSize(24);
-            this->text->setFillColor(sf::Color::Black);
-            this->text->setString("Placeholder string");
-            this->text->setPosition(300, 300);
+        this->text->setFont(*font);
+        this->text->setCharacterSize(24);
+        this->text->setFillColor(sf::Color::Black);
+        this->text->setString("Placeholder string");
+        this->text->setPosition(300, 300);
         }
 
     TextWriter::TextWriter(std::string fontPath) {
-            sf::Font* font;
+            sf::Font* font = new sf::Font();
             if (!font->loadFromFile(fontPath))
             {
                 printf("Error loading font");

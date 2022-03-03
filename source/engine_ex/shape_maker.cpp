@@ -74,6 +74,9 @@ int main() {
     // Testing the ProfilerFPS class
     ae::ProfilerFPS profilerfps;
 
+    // Testing the Text Writer class
+    ae::TextWriter textWriter;
+
     // run the program as long as the window is open
     while (AcesWindow.getWindow().isOpen())
     {
@@ -121,6 +124,9 @@ int main() {
         }
 
         AcesWindow.update();
+
+        textWriter.draw(AcesWindow);
+
         dice.draw(AcesWindow);
         ae::enableDraggables(draggable_array, AcesWindow);
         ae::enableInputables(inputable_array, AcesWindow);
