@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['receiveinput_0',['receiveInput',['../classacesengine_1_1_inputable.html#a653f41dbe533eeca5296cdd56d04bd84',1,'acesengine::Inputable']]],
-  ['remapinput_1',['remapInput',['../classacesengine_1_1_player.html#aa5d62e7582f0dcd84412748fd0651eaf',1,'acesengine::Player']]],
-  ['resumerecordingsound_2',['resumeRecordingSound',['../classacesengine_1_1_sound_player.html#a370a0bb28d98ed380e971f792ac4391a',1,'acesengine::SoundPlayer']]]
+  ['pauserecordingsound_0',['pauseRecordingSound',['../classacesengine_1_1_sound_player.html#adfeef9fc0f083feab38d341f2f13fd41',1,'acesengine::SoundPlayer']]],
+  ['playaudio_1',['playAudio',['../classacesengine_1_1_sound_player.html#a767663c0aabeeeecc98b9783c1c67c25',1,'acesengine::SoundPlayer']]],
+  ['player_2',['Player',['../classacesengine_1_1_player.html#a0609201a72bbaeed365f723606064338',1,'acesengine::Player']]],
+  ['playmusic_3',['playMusic',['../classacesengine_1_1_sound_player.html#ab253a6c9e90a79117049bc97cca4b4e4',1,'acesengine::SoundPlayer']]],
+  ['profilerfps_4',['ProfilerFPS',['../classacesengine_1_1_profiler_f_p_s.html#adf6e7e21069c0f69abb009ea3a7a3b33',1,'acesengine::ProfilerFPS']]]
 ];
