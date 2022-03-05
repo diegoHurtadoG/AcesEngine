@@ -14,7 +14,7 @@ namespace acesengine {
         this->text->setCharacterSize(24);
         this->text->setFillColor(sf::Color::White);
         this->text->setString("Placeholder string");
-        this->text->setPosition(620, 25);
+        this->text->setPosition(700, 25);
         }
 
     TextWriter::TextWriter(std::string fontPath) {
@@ -28,7 +28,7 @@ namespace acesengine {
         this->text->setCharacterSize(24);
         this->text->setFillColor(sf::Color::White);
         this->text->setString("Placeholder string");
-        this->text->setPosition(620, 25);
+        this->text->setPosition(700, 25);
         }
 
     void TextWriter::setString(std::string text) {

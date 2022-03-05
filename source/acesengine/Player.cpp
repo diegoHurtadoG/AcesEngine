@@ -7,21 +7,19 @@ namespace acesengine {
             std::string texturePath,
             int firstPointAssetX, int firstPointAssetY, int secondPointAssetX, int secondPointAssetY,
             int playerNumber) : Inputable(x, y, texturePath, firstPointAssetX, firstPointAssetY, secondPointAssetX, secondPointAssetY)
-        {                       // HERE
+        {                       
             this->playerNumber = playerNumber;
-            this->remapInput(this->playerNumber); // HERE
+            this->remapInput(this->playerNumber); 
         }
 
     void Player::setPlayerNumber(int playerNumber) {
         this->playerNumber = playerNumber % 2;
-        this->remapInput(playerNumber); // HERE
+        this->remapInput(playerNumber); 
     }
 
     int Player::getPlayerNumber() {
         return this->playerNumber;
     }
-
-    // HERE
 
     void Player::remapInput(int playerNumber) {
         if (playerNumber == 1) {

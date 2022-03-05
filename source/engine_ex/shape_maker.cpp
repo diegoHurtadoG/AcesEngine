@@ -64,7 +64,6 @@ int main() {
     // Testing SoundPlayer class
     ae::SoundPlayer acesSoundPlayer;
     acesSoundPlayer.loadAudio("congratulations", ae::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
-    //acesSoundPlayer.playAudio("congratulations");
 
     acesSoundPlayer.loadAudio("correct", ae::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
 
@@ -108,12 +107,15 @@ int main() {
                 else if (event.key.code == sf::Keyboard::Key::C) {
                     acesSoundPlayer.playAudio("correct");
                 }
+                else if (event.key.code == sf::Keyboard::Key::V) {
+                    acesSoundPlayer.playAudio("congratulations");
+                }
                 else if (event.key.code == sf::Keyboard::Key::R) {
                     int value;
                     int time = (rand() % 200 + 100);
                     do {
                         value = dice.roll(time);
-                        printf("Rolling.\n");
+                        //printf("Rolling.\n");
                         dice.draw(AcesWindow);
                         AcesWindow.display();
                         time = time - 20;
