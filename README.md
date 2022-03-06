@@ -114,13 +114,20 @@ int main() {
     // Testing SoundPlayer class
     ae::SoundPlayer acesSoundPlayer;
     acesSoundPlayer.loadAudio("congratulations", ae::getPath("assets/audios/VoiceOverPack/Male/congratulations.ogg").string());
-    acesSoundPlayer.playAudio("congratulations");
 
     acesSoundPlayer.loadAudio("correct", ae::getPath("assets/audios/VoiceOverPack/Female/correct.ogg").string());
 
+    // Testing the Dice class (and the Animation inside it)
+    ae::Dice dice;
+
+    // Testing the ProfilerFPS class
+    ae::ProfilerFPS profilerfps;
+
+    // Testing the Text Writer class
+    ae::TextWriter textWriter;
+
     // run the program as long as the window is open
-    // TODO: abstract while loop to use AcesWindow instead of window
-    while (window.isOpen())
+    while (AcesWindow.getWindow().isOpen())
     {
 
         // check all the window's events that were triggered since the last iteration of the loop
@@ -135,7 +142,7 @@ int main() {
                 printf("The window has been resized, width: %i, height: %i\n", event.size.width, event.size.height);
                 break;
             case sf::Event::KeyReleased:
-                if (event.key.code == sf::Keyboard::Key::R && false) { // TODO: Fix recording, fails due to memory error
+                if (event.key.code == sf::Keyboard::Key::F && false) { // TODO: Fix recording, fails due to memory error
                     printf("began recording\n");
                     if (acesSoundPlayer.getRecordingState()) {
                         std::string recording_name = "Grabacion_test";
@@ -150,12 +157,34 @@ int main() {
                 else if (event.key.code == sf::Keyboard::Key::C) {
                     acesSoundPlayer.playAudio("correct");
                 }
+                else if (event.key.code == sf::Keyboard::Key::V) {
+                    acesSoundPlayer.playAudio("congratulations");
+                }
+                else if (event.key.code == sf::Keyboard::Key::R) {
+                    int value;
+                    int time = (rand() % 200 + 100);
+                    do {
+                        value = dice.roll(time);
+                        //printf("Rolling.\n");
+                        dice.draw(AcesWindow);
+                        AcesWindow.display();
+                        time = time - 20;
+                    } while (time > 50);
+                    printf("Dice has been rolled, value: %i\n", value);
+                }
             }
         }
 
         AcesWindow.update();
+
+        dice.draw(AcesWindow);
         ae::enableDraggables(draggable_array, AcesWindow);
         ae::enableInputables(inputable_array, AcesWindow);
+
+        profilerfps.update();
+        textWriter.setString("FPS: " + std::to_string(profilerfps.getFPS()));
+        textWriter.draw(AcesWindow);
+
         AcesWindow.display();
 
     }

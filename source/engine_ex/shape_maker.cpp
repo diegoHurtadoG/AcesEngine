@@ -21,24 +21,6 @@
         such as cards and a dice for example
 */
 
-/*
- EXTRA MILESTONE 1 TODO: Pegarse a la pauta y ver puntajes
-      - Para el remapeo de controles solo se puede la opcion del switch/case gigante
-      - El text writer podria tener un vector de strings a dibujar y que todos tengan la misma fuente y cosas, ver si conviene
-*/
-
-/*
- TODO MILESTONE 2: TERMINAR TEXT RENDERER Y EN VOLA EL RECORDER -> GANAR BONUS DE AVANCES MILESTONE 1
- 
- MILESTONE 2 TODO: Classes for cards and dice, Usando Component Model
-      Cards: - Position (Drag and Drop?)
-             - Assets
-             - OnClick -> show reverse
-      Dice:  - Position (dinamic?)
-             - Asset
-             - OnClick -> Roll
-*/
-
 // This function is to test the art I will be doing in the functions
 int main() {
     namespace ae = acesengine;
