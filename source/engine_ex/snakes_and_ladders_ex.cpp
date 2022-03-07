@@ -14,6 +14,8 @@
 #include <acesengine/TextWriter.h>
 #include <acesengine/root_directory.h>
 #include <acesengine/acesengine.h>
+#include <acesengine/Dice.h>
+#include <acesengine/ProfilerFPS.h>
 
 // This function is to test the art I will be doing in the functions
 int main() {
@@ -53,6 +55,16 @@ int main() {
     acesSoundPlayer.setVolumeAudio("music", 50);
     bool playing = true;
 
+
+    // Testing the Dice class (and the Animation inside it)
+    ae::Dice dice;
+
+    // Testing the ProfilerFPS class
+    ae::ProfilerFPS profilerfps;
+
+    // Testing the Text Writer class
+    ae::TextWriter textWriter;
+
     // run the program as long as the window is open
     // TODO: abstract while loop to use AcesWindow instead of window
     while (window.isOpen())
@@ -86,6 +98,18 @@ int main() {
                         playing = !playing;
                     }
                 }
+                else if (event.key.code == sf::Keyboard::Key::R) {
+                    int value;
+                    int time = (rand() % 200 + 100);
+                    do {
+                        value = dice.roll(time);
+                        //printf("Rolling.\n");
+                        dice.draw(AcesWindow);
+                        AcesWindow.display();
+                        time = time - 20;
+                    } while (time > 50);
+                    printf("Dice has been rolled, value: %i\n", value);
+                }
                 else if (event.key.code == sf::Keyboard::Key::Num1) {
                     acesSoundPlayer.setVolumeAudio("music", acesSoundPlayer.getVolumeAudio("music") - 10);;
                 }
@@ -103,8 +127,15 @@ int main() {
 
         AcesWindow.update();
         board.draw(AcesWindow);
+
+        dice.draw(AcesWindow);
         ae::enableDraggables(draggable_array, AcesWindow);
         ae::enableInputables(inputable_array, AcesWindow);
+
+        profilerfps.update();
+        textWriter.setString("FPS: " + std::to_string(profilerfps.getFPS()));
+        textWriter.draw(AcesWindow);
+
         AcesWindow.display();
     }
 
