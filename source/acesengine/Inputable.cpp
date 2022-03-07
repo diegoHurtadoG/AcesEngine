@@ -42,7 +42,7 @@ namespace acesengine {
                 this->movements.push_back(0);
             }
             if (!(this->movements.empty()) && this->movements.size() >= 5) {
-                printf("Side to side combination executing");
+                printf("Side to side combination executing\n");
                 this->movements.clear();
                 this->sprite.move(20.0f, 20.0f);
             }
